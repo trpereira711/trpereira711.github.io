@@ -1,290 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thiago Roberto Pereira | Consultoria Java e Arquitetura de Software</title>
-  <meta 
-    name="description" 
-    content="Consultoria técnica para sistemas Java corporativos: Spring Boot, APIs REST, arquitetura, modernização de legado, testes automatizados e integrações." 
-  />
-  <meta name="author" content="Thiago Roberto Pereira" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Thiago Roberto Pereira | Consultoria Java e Arquitetura de Software" />
-  <meta property="og:description" content="Consultoria técnica para sistemas Java corporativos, APIs, modernização de legado, arquitetura e testes automatizados." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="pt_BR" />
+  <title>Thiago Roberto Pereira | Engenharia de Software</title>
+  <meta name="description" content="Engenharia de Software sênior, Arquitetura de Sistemas e Consultoria técnica para ecossistemas Java críticos." />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-
 <body>
+  <div class="background-layer">
+    <div class="bg-grid"></div>
+    <div class="signal-noise"></div>
+  </div>
   <header class="site-header">
     <div class="container header-content">
-      <a class="brand" href="#inicio" aria-label="Página inicial">
-        <span class="brand-mark">TRP</span>
-        <span class="brand-text">Thiago Roberto Pereira</span>
+      <a class="brand" href="#inicio">
+        <span class="brand-mark">TP</span> Engenharia de Software
       </a>
-
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-navigation">
-        Menu
-      </button>
-
-      <nav id="main-navigation" class="navigation" aria-label="Navegação principal">
+      <nav id="main-navigation" class="navigation">
+        <a href="#inicio">Início</a>
         <a href="#servicos">Serviços</a>
-        <a href="#metodo">Como trabalho</a>
+        <a href="#metodologia">Metodologia</a>
         <a href="#experiencia">Experiência</a>
+        <a href="#diagnostico">Diagnóstico</a>
         <a href="#contato">Contato</a>
       </nav>
     </div>
   </header>
+
   <main id="inicio">
-    <section class="hero section">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <p class="eyebrow">Consultoria técnica para sistemas corporativos</p>
-  
-          <h1>Java, Spring Boot, arquitetura e modernização de sistemas legados.</h1>
-  
-          <p class="hero-description">
-            Apoio empresas na evolução de aplicações Java corporativas, revisão arquitetural,
-            desenvolvimento de APIs, integrações, testes automatizados e redução de riscos técnicos.
-          </p>
-  
-          <div class="hero-actions">
-            <a class="button button-primary" href="#contato">Solicitar diagnóstico técnico</a>
-            <a class="button button-secondary" href="#servicos">Ver serviços</a>
-          </div>
-  
-          <dl class="hero-metrics" aria-label="Resumo profissional">
-            <div>
-              <dt>15+</dt>
-              <dd>anos de experiência</dd>
-            </div>
-            <div>
-              <dt>Java</dt>
-              <dd>Spring Boot, APIs e integrações</dd>
-            </div>
-            <div>
-              <dt>B2B</dt>
-              <dd>sistemas corporativos e legados</dd>
-            </div>
-          </dl>
-        </div>
-  
-        <aside class="hero-card" aria-label="Resumo dos principais focos de atuação">
-          <h2>Problemas que resolvo</h2>
-          <ul class="check-list">
-            <li>Sistemas Java difíceis de manter</li>
-            <li>APIs instáveis, acopladas ou mal documentadas</li>
-            <li>Baixa cobertura de testes automatizados</li>
-            <li>Integrações frágeis entre sistemas</li>
-            <li>Legados que precisam evoluir sem reescrita total</li>
-            <li>Times sem apoio técnico sênior contínuo</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-  
-    <section id="servicos" class="section section-muted">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Serviços</p>
-          <h2>Atuação objetiva para demandas técnicas críticas.</h2>
-          <p>
-            Trabalho por diagnóstico, entrega fechada, hora técnica ou apoio mensal,
-            conforme o risco, a urgência e o nível de envolvimento necessário.
-          </p>
-        </div>
-  
-        <div class="cards-grid">
-          <article class="card">
-            <h3>Diagnóstico técnico Java/Spring</h3>
-            <p>
-              Análise de arquitetura, código, dependências, testes, logs, banco de dados e
-              riscos técnicos, com plano de ação priorizado.
-            </p>
-          </article>
-  
-          <article class="card">
-            <h3>Modernização de legado</h3>
-            <p>
-              Evolução gradual de sistemas Java corporativos, reduzindo acoplamento,
-              melhorando manutenibilidade e evitando reescritas desnecessárias.
-            </p>
-          </article>
-  
-          <article class="card">
-            <h3>APIs e integrações</h3>
-            <p>
-              Desenvolvimento, manutenção e refatoração de APIs REST, integrações com
-              sistemas externos e correção de fluxos críticos.
-            </p>
-          </article>
-  
-          <article class="card">
-            <h3>Revisão arquitetural</h3>
-            <p>
-              Avaliação de decisões técnicas, camadas, modularização, padrões,
-              separação de responsabilidades e aderência a boas práticas.
-            </p>
-          </article>
-  
-          <article class="card">
-            <h3>Code review sênior</h3>
-            <p>
-              Apoio a times de desenvolvimento com revisão de código, orientação técnica,
-              melhoria de qualidade e redução de débito técnico.
-            </p>
-          </article>
-  
-          <article class="card">
-            <h3>Testes automatizados</h3>
-            <p>
-              Criação e evolução de testes unitários, integração e ponta a ponta,
-              aumentando segurança para manutenção e evolução do sistema.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-  
-    <section id="metodo" class="section">
-      <div class="container two-columns">
-        <div class="section-heading align-left">
-          <p class="eyebrow">Como trabalho</p>
-          <h2>Processo simples, técnico e orientado a resultado.</h2>
-          <p>
-            A contratação pode começar pequena: uma conversa técnica, um diagnóstico,
-            uma entrega pontual ou um pacote mensal de apoio ao time.
-          </p>
-        </div>
-  
-        <ol class="steps-list">
-          <li>
-            <strong>Entendimento do contexto</strong>
-            <span>Mapeamento da dor, restrições, riscos, urgência e objetivo de negócio.</span>
-          </li>
-          <li>
-            <strong>Avaliação técnica</strong>
-            <span>Análise de código, arquitetura, banco, integrações, testes e pipeline quando aplicável.</span>
-          </li>
-          <li>
-            <strong>Proposta objetiva</strong>
-            <span>Definição do escopo, entregáveis, formato de contratação e critérios de aceite.</span>
-          </li>
-          <li>
-            <strong>Execução e validação</strong>
-            <span>Entrega técnica validável, documentação mínima necessária e recomendações de continuidade.</span>
-          </li>
-        </ol>
-      </div>
-    </section>
-  
-    <section id="experiencia" class="section section-muted">
-      <div class="container two-columns">
-        <div>
-          <p class="eyebrow">Experiência</p>
-          <h2>15 anos em engenharia de software corporativa.</h2>
-          <p>
-            Atuação como Engenheiro de Software Master, Tech Lead e responsável técnico
-            em projetos para ambientes corporativos com alta exigência de estabilidade,
-            integração, manutenibilidade e qualidade técnica.
-          </p>
-          <p>
-            Experiência em setores como governo, justiça, cooperativismo financeiro,
-            saúde, gestão de pessoas e sistemas internos de missão crítica.
-          </p>
-        </div>
-  
-        <div class="skills-panel">
-          <h3>Principais tecnologias e práticas</h3>
-          <div class="tags">
-            <span>Java</span>
-            <span>Spring Boot</span>
-            <span>REST APIs</span>
-            <span>Hibernate</span>
-            <span>Angular</span>
-            <span>React</span>
-            <span>Vue</span>
-            <span>TypeScript</span>
-            <span>SQL</span>
-            <span>Oracle</span>
-            <span>PostgreSQL</span>
-            <span>Docker</span>
-            <span>Kubernetes</span>
-            <span>Jenkins</span>
-            <span>CI/CD</span>
-            <span>JUnit</span>
-            <span>Mockito</span>
-            <span>Cypress</span>
-            <span>Arquitetura Hexagonal</span>
-            <span>DDD</span>
-            <span>Microsserviços</span>
-            <span>Clean Code</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  
-    <section class="section cta-section">
-      <div class="container cta-box">
-        <div>
-          <p class="eyebrow">Primeiro passo recomendado</p>
-          <h2>Comece com um diagnóstico técnico.</h2>
-          <p>
-            Uma avaliação curta pode identificar riscos, oportunidades de melhoria e
-            próximos passos antes de comprometer orçamento com uma mudança maior.
-          </p>
-        </div>
-  
-        <a class="button button-primary" href="#contato">Entrar em contato</a>
-      </div>
-    </section>
-  
-    <section id="contato" class="section">
-      <div class="container contact-grid">
-        <div>
-          <p class="eyebrow">Contato</p>
-          <h2>Vamos conversar sobre sua demanda técnica.</h2>
-          <p>
-            Envie uma mensagem com o contexto do sistema, principal problema,
-            tecnologia utilizada e urgência. Retornarei com uma avaliação inicial.
-          </p>
-        </div>
-  
-        <div class="contact-card">
-          <a class="contact-item" href="mailto:seuemail@dominio.com">
-            <span>E-mail</span>
-            <strong>seuemail@dominio.com</strong>
-          </a>
-  
-          <a class="contact-item" href="https://www.linkedin.com/in/seu-linkedin" target="_blank"
-            rel="noopener noreferrer">
-            <span>LinkedIn</span>
-            <strong>linkedin.com/in/seu-linkedin</strong>
-          </a>
-  
-          <a class="contact-item" href="https://github.com/trpereira711" target="_blank" rel="noopener noreferrer">
-            <span>GitHub</span>
-            <strong>github.com/trpereira711</strong>
-          </a>
-  
-          <a class="contact-item" href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">
-            <span>WhatsApp</span>
-            <strong>Adicionar número profissional</strong>
-          </a>
-        </div>
-      </div>
-    </section>
+
   </main>
+
   <footer class="site-footer">
-    <div class="container footer-content">
-      <p>© <span id="current-year"></span> Thiago Roberto Pereira. Todos os direitos reservados.</p>
-      <a href="#inicio">Voltar ao topo</a>
-    </div>
+
   </footer>
+
   <script src="assets/js/main.js"></script>
 </body>
-
 </html>
