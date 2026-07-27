@@ -60,6 +60,53 @@ if ("IntersectionObserver" in window && methodologySteps.length) {
   methodologyList.style.setProperty("--timeline-progress", "1");
 }
 
+const contactForm = document.querySelector("#contact-form");
+
+if (contactForm) {
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const buttonLabel = submitButton.querySelector(".button-label");
+  const formStatus = contactForm.querySelector(".form-status");
+  const defaultButtonLabel = buttonLabel.textContent;
+
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    buttonLabel.textContent = "Enviando...";
+    formStatus.textContent = "";
+    formStatus.className = "form-status";
+    contactForm.setAttribute("aria-busy", "true");
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: contactForm.method,
+        body: new FormData(contactForm),
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        const message = response.status === 429
+          ? "Muitas tentativas em sequência. Aguarde um momento e tente novamente."
+          : "Não foi possível enviar sua mensagem. Tente novamente.";
+        throw new Error(message);
+      }
+
+      contactForm.reset();
+      formStatus.textContent = "Mensagem enviada. Retornarei o contato assim que possível.";
+      formStatus.classList.add("is-success");
+    } catch (error) {
+      formStatus.textContent = error.message;
+      formStatus.classList.add("is-error");
+    } finally {
+      submitButton.disabled = false;
+      buttonLabel.textContent = defaultButtonLabel;
+      contactForm.removeAttribute("aria-busy");
+    }
+  });
+}
+
 if (menuButton && navigation) {
   menuButton.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("is-open");

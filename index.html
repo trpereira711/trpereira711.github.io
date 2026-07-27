@@ -326,7 +326,8 @@
             A partir disso, avaliaremos o formato de apoio mais adequado.</p>
         </div>
 
-        <form class="contact-form">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/xrenrjbg" method="POST">
+          <input class="form-trap" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label>Nome<input type="text" name="nome" autocomplete="name" required></label>
           <label>Empresa<input type="text" name="empresa" autocomplete="organization"></label>
           <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
@@ -334,9 +335,10 @@
               placeholder="Descreva o sistema, o problema atual e o impacto que ele está causando."
               required></textarea></label>
           <button type="submit" class="btn btn--primary">
-            Enviar contexto
+            <span class="button-label">Enviar contexto</span>
             <span class="material-symbols-outlined btn-icon">arrow_outward</span>
           </button>
+          <p class="form-status" role="status" aria-live="polite"></p>
           <p class="contact-support">
             Prefere uma conversa direta?
             <a href="https://www.linkedin.com/in/thiago-roberto-pereira-2b2a89106/" rel="me noopener noreferrer"
