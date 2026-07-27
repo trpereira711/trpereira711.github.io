@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'sha256-o+5tbPXnWmYVgO0YEpgh084tLBA3ZkOvyxuB2s0ji2s='; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io; form-action https://formspree.io; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Modernização de Sistemas Legados Java | Thiago Pereira</title>
   <meta name="description"
     content="Consultoria para modernização de sistemas legados Java em todo o Brasil, com atendimento remoto e presencial em Brasília, DF. Fale com Thiago Pereira." />
@@ -20,8 +23,6 @@
   <meta name="twitter:description"
     content="Consultoria para modernização de sistemas legados Java em todo o Brasil, com atendimento remoto e presencial em Brasília, DF." />
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -327,18 +328,22 @@
         </div>
 
         <form id="contact-form" class="contact-form" action="https://formspree.io/f/xrenrjbg" method="POST">
-          <input class="form-trap" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <label>Nome<input type="text" name="nome" autocomplete="name" required></label>
-          <label>Empresa<input type="text" name="empresa" autocomplete="organization"></label>
-          <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+          <input class="form-trap" type="text" name="_gotcha" maxlength="100" tabindex="-1" autocomplete="off"
+            aria-hidden="true">
+          <label>Nome<input type="text" name="nome" maxlength="100" autocomplete="name" required></label>
+          <label>Empresa<input type="text" name="empresa" maxlength="120" autocomplete="organization"></label>
+          <label>E-mail<input type="email" name="email" maxlength="254" autocomplete="email" required></label>
           <label>Como posso ajudar?<textarea name="mensagem" rows="6"
               placeholder="Descreva o sistema, o problema atual e o impacto que ele está causando."
-              required></textarea></label>
+              maxlength="3000" required></textarea></label>
+          <p class="form-note">Não envie senhas, credenciais, código-fonte ou informações confidenciais por este
+            formulário.</p>
           <button type="submit" class="btn btn--primary">
             <span class="button-label">Enviar contexto</span>
             <span class="material-symbols-outlined btn-icon">arrow_outward</span>
           </button>
           <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="form-note">Os dados informados serão utilizados exclusivamente para responder ao contato.</p>
           <p class="contact-support">
             Prefere uma conversa direta?
             <a href="https://www.linkedin.com/in/thiago-roberto-pereira-2b2a89106/" rel="me noopener noreferrer"

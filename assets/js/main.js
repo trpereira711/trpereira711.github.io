@@ -67,9 +67,28 @@ if (contactForm) {
   const buttonLabel = submitButton.querySelector(".button-label");
   const formStatus = contactForm.querySelector(".form-status");
   const defaultButtonLabel = buttonLabel.textContent;
+  const fieldLimits = {
+    _gotcha: 100,
+    nome: 100,
+    empresa: 120,
+    email: 254,
+    mensagem: 3000
+  };
 
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const hasOversizedField = Object.entries(fieldLimits).some(([field, limit]) => {
+      const value = formData.get(field);
+      return typeof value === "string" && value.length > limit;
+    });
+
+    if (hasOversizedField) {
+      formStatus.textContent = "Um ou mais campos ultrapassaram o limite permitido.";
+      formStatus.className = "form-status is-error";
+      return;
+    }
 
     submitButton.disabled = true;
     buttonLabel.textContent = "Enviando...";
@@ -80,7 +99,7 @@ if (contactForm) {
     try {
       const response = await fetch(contactForm.action, {
         method: contactForm.method,
-        body: new FormData(contactForm),
+        body: formData,
         headers: {
           Accept: "application/json"
         }
