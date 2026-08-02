@@ -6,8 +6,9 @@ if (currentYear) {
   currentYear.textContent = new Date().getFullYear();
 }
 
-// Reveal ao rolar: revela cada elemento .reveal quando entra na viewport.
-const revealElements = document.querySelectorAll(".reveal");
+// Reveal ao rolar: revela cada bloco quando entra na viewport.
+// .reveal anima o elemento inteiro; .reveal-group anima os filhos em cascata.
+const revealElements = document.querySelectorAll(".reveal, .reveal-group");
 
 if ("IntersectionObserver" in window && revealElements.length) {
   const revealObserver = new IntersectionObserver(

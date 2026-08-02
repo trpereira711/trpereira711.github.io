@@ -457,11 +457,54 @@ main,
   transform: translateY(0);
 }
 
+/* Seções com cascata não se movem como bloco: o movimento fica por conta dos filhos. */
+.reveal:has(.reveal-group) {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Cascata: cada filho direto do grupo entra em sequência quando o grupo aparece. */
+.reveal-group>* {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--reveal-start, 0ms) + var(--reveal-index, 0) * var(--reveal-step, 90ms));
+}
+
+.reveal-group.is-visible>* {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-group>*:nth-child(1) { --reveal-index: 0; }
+.reveal-group>*:nth-child(2) { --reveal-index: 1; }
+.reveal-group>*:nth-child(3) { --reveal-index: 2; }
+.reveal-group>*:nth-child(4) { --reveal-index: 3; }
+.reveal-group>*:nth-child(5) { --reveal-index: 4; }
+.reveal-group>*:nth-child(6) { --reveal-index: 5; }
+.reveal-group>*:nth-child(7) { --reveal-index: 6; }
+.reveal-group>*:nth-child(n+8) { --reveal-index: 7; }
+
+/* Grupos que vêm logo abaixo do cabeçalho começam depois dele. */
+.reveal-group--delayed {
+  --reveal-start: 180ms;
+}
+
+/* Cascata só com fade: evita descolar itens ligados por linha (metodologia). */
+.reveal-group--fade>* {
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal-group>* {
     opacity: 1;
     transform: none;
     transition: none;
+    transition-delay: 0ms;
   }
 }
 
