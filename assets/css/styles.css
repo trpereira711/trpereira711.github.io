@@ -15,47 +15,78 @@
 }
 
 @font-face {
-    font-family: 'Material Symbols Outlined';
+    font-family: 'Instrument Serif';
     font-style: normal;
-    font-weight: 300 400;
-    font-display: block;
-    src: url('../fonts/material-symbols-subset.woff2') format('woff2');
-}
-
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    font-feature-settings: 'liga';
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/instrument-serif-latin.woff2') format('woff2');
 }
 
 :root {
-  --bg-color: #000000;
-  --bg-panel: #09090b;
-  --border-color: #27272a;
-  --border-hover: #3f3f46;
+  /* Paleta em OKLCH: lightness perceptualmente uniforme, então a rampa de
+     superfícies tem degraus regulares de verdade. Contraste sobre --bg-color
+     anotado ao lado; todos os tokens de texto passam WCAG AA. */
 
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  /* Superfícies: quase-preto com matiz fria, não preto puro.
+     Preto absoluto causa halation em OLED e não deixa espaço para descer. */
+  --bg-color: oklch(0.150 0.008 250);
+  --bg-panel: oklch(0.185 0.009 250);
+  --bg-raised: oklch(0.230 0.010 250);
 
-  --accent-color: #ffffff;
-  --accent-muted: rgba(255, 255, 255, 0.1);
+  --border-color: oklch(0.320 0.012 250);
+  --border-hover: oklch(0.420 0.014 250);
+
+  --text-primary: oklch(0.960 0.003 250);
+  /* 17.5:1 */
+  --text-secondary: oklch(0.790 0.008 250);
+  /* 10.2:1 */
+  --text-muted: oklch(0.650 0.012 250);
+  /*  6.1:1 */
+
+  /* Azul cianótipo: a cor histórica da planta baixa, de onde vem o termo
+     "blueprint". Fala a mesma língua do grid de fundo. Azul empoeirado,
+     não azul elétrico. Usar com avareza — no máximo 5% da superfície. */
+  --accent: oklch(0.700 0.110 245);
+  /* 7.4:1 */
+  --accent-dim: oklch(0.610 0.100 245);
+  /* 5.2:1 */
+  --accent-wash: oklch(0.700 0.110 245 / 0.12);
+
+  --color-success: oklch(0.820 0.150 155);
+  --color-error: oklch(0.750 0.150 25);
+
+  /* Halo do campo focado. É só reforço: quem cumpre a WCAG 1.4.11
+     é a borda sólida, que dá 7:1 contra o painel. */
+  --focus-ring: oklch(0.700 0.110 245 / 0.22);
+  --focus-ring-error: oklch(0.750 0.150 25 / 0.22);
+
+  --accent-color: var(--accent);
+  --accent-muted: oklch(0.960 0.003 250 / 0.1);
+
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 24px;
   --container-width: 1100px;
+
+  /* Escala de espaçamento em passos de 0.25rem.
+     O número do token é o multiplicador: --space-4 = 4 × 0.25rem = 1rem. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-28: 7rem;
 
   --transition: all 0.2s ease;
 }
@@ -65,16 +96,24 @@
 }
 
 html {
-  scroll-behavior: smooth;
   background-color: var(--bg-color);
+  /* Compensa o header fixo ao mover o foco por teclado (WCAG 2.2 §2.4.11). */
+  scroll-padding-top: calc(64px + var(--space-4));
+}
+
+/* Scroll suave é gatilho vestibular: só para quem não pediu menos movimento. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
   color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden;
   background: var(--bg-color);
   min-height: 100vh;
   position: relative;
@@ -83,7 +122,7 @@ body {
 }
 
 
-/* Background visual: grid e interferência em camadas separadas. */
+/* Background visual: grid técnico fixo, mascarado nas laterais. */
 .background-layer {
   position: fixed;
   inset: 0;
@@ -93,166 +132,20 @@ body {
   background: var(--bg-color);
 }
 
-.bg-grid,
-.signal-noise {
+.bg-grid {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-}
-
-/* Grid técnico de fundo: estático e independente da animação. */
-.bg-grid {
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 120 0 L 0 0 0 60' fill='none' stroke='%23ffffff' stroke-width='1' stroke-opacity='0.40' stroke-dasharray='4 4'/%3E%3C/svg%3E");
-  background-size: 120px 60px;
+  /* Célula quadrada e traço contínuo: papel de desenho, não planilha.
+     A opacidade da camada é o único número a mexer para calibrar. */
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 32 0 L 0 0 0 32' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 32px 32px;
   background-position: center top;
-  opacity: 0.9;
+  opacity: 0.07;
   -webkit-mask-image: linear-gradient(to right, black 0%, transparent 30%, transparent 70%, black 100%);
   mask-image: linear-gradient(to right, black 0%, transparent 30%, transparent 70%, black 100%);
-}
-
-/* Interferência visual: camada separada para não acoplar o glitch ao grid. */
-.signal-noise {
-  z-index: 1;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, black 0%, transparent 30%, transparent 70%, black 100%);
-  mask-image: linear-gradient(to right, black 0%, transparent 30%, transparent 70%, black 100%);
-}
-
-.signal-noise::before,
-.signal-noise::after {
-  content: '';
-  position: absolute;
-  top: -5%;
-  left: -5%;
-  width: 110%;
-  height: 110%;
-  background-size: 1200px 600px;
-  background-position: center top;
-  background-repeat: repeat;
-  opacity: 0;
-  will-change: opacity, transform, background-position;
-}
-
-/* Barras coloridas + ruído: piscada rápida e tremor horizontal. */
-.signal-noise::before {
-  background-image: url("data:image/svg+xml,%3Csvg width='1200' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23000000' stop-opacity='1'/%3E%3Cstop offset='25%25' stop-color='%2310b981' stop-opacity='1'/%3E%3Cstop offset='50%25' stop-color='%2306b6d4' stop-opacity='1'/%3E%3Cstop offset='75%25' stop-color='%233b82f6' stop-opacity='1'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='1'/%3E%3C/linearGradient%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3C/defs%3E%3Crect x='0' y='90' width='240' height='45' fill='url(%23g)'/%3E%3Crect x='300' y='90' width='480' height='45' fill='url(%23g)'/%3E%3Crect x='120' y='170' width='300' height='45' fill='url(%23g)'/%3E%3Crect x='540' y='170' width='420' height='45' fill='url(%23g)'/%3E%3Crect x='0' y='250' width='360' height='45' fill='url(%23g)'/%3E%3Crect x='420' y='250' width='420' height='45' fill='url(%23g)'/%3E%3Crect x='120' y='330' width='300' height='45' fill='url(%23g)'/%3E%3Crect x='480' y='330' width='240' height='45' fill='url(%23g)'/%3E%3Crect x='0' y='410' width='300' height='45' fill='url(%23g)'/%3E%3Crect x='360' y='410' width='240' height='45' fill='url(%23g)'/%3E%3Crect x='660' y='410' width='180' height='45' fill='url(%23g)'/%3E%3Crect width='1200' height='600' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  animation:
-    tv-flicker 16s steps(1, end) 1.2s infinite,
-    tv-jitter 0.18s steps(2, end) infinite;
-}
-
-/* Estática/ruído puro: aparece junto da rajada e rola verticalmente. */
-.signal-noise::after {
-  background-image: url("data:image/svg+xml,%3Csvg width='1200' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='1200' height='600' filter='url(%23n2)' opacity='0.5'/%3E%3C/svg%3E");
-  mix-blend-mode: screen;
-  animation:
-    tv-static 16s steps(1, end) 1.2s infinite,
-    tv-roll 6s linear infinite;
-}
-
-/* Ciclo de 16s: primeira rajada aparece rápido após carregar e depois se repete. */
-@keyframes tv-flicker {
-
-  0%,
-  5%,
-  15%,
-  100% {
-    opacity: 0;
-  }
-
-  6% {
-    opacity: 0.95;
-  }
-
-  7% {
-    opacity: 0.08;
-  }
-
-  8% {
-    opacity: 0.85;
-  }
-
-  9% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  11% {
-    opacity: 0.18;
-  }
-
-  12% {
-    opacity: 0.8;
-  }
-
-  13% {
-    opacity: 0;
-  }
-}
-
-@keyframes tv-jitter {
-  0% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(-6px);
-  }
-
-  100% {
-    transform: translateX(4px);
-  }
-}
-
-@keyframes tv-static {
-
-  0%,
-  5%,
-  15%,
-  100% {
-    opacity: 0;
-  }
-
-  6% {
-    opacity: 0.28;
-  }
-
-  9% {
-    opacity: 0.14;
-  }
-
-  11% {
-    opacity: 0.3;
-  }
-
-  13% {
-    opacity: 0.16;
-  }
-}
-
-@keyframes tv-roll {
-  0% {
-    background-position: center 0;
-  }
-
-  100% {
-    background-position: center 600px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .signal-noise::before,
-  .signal-noise::after {
-    animation: none;
-    opacity: 0;
-  }
 }
 
 h1,
@@ -263,8 +156,20 @@ h5,
 h6 {
   margin: 0;
   line-height: 1.1;
-  letter-spacing: -0.04em;
+  /* Tracking base para títulos médios; os de display apertam mais,
+     os pequenos voltam para zero (ver .expertise-grid h3). */
+  letter-spacing: -0.02em;
   font-weight: 700;
+}
+
+/* A serifada de display entra só nos tamanhos grandes. Em 1rem ela ficaria
+   frágil demais — daí h3 para baixo seguirem na Inter. */
+.hero-title,
+.section-heading h2,
+.diagnostic-content h2,
+.contact-content h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
 }
 
 a {
@@ -273,14 +178,44 @@ a {
   transition: var(--transition);
 }
 
+/* Foco visível para quem navega por teclado. */
+:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+/* Atalho para pular a navegação; só aparece ao receber foco. */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--text-primary);
+  color: var(--bg-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+#conteudo {
+  scroll-margin-top: 64px;
+}
+
 p {
   color: var(--text-secondary);
   margin-top: 0;
 }
 
 .mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
 }
 
 .container {
@@ -295,7 +230,7 @@ p {
   width: 100%;
   z-index: 50;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: oklch(0.150 0.008 250 / 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -307,47 +242,123 @@ p {
   height: 64px;
 }
 
+/* Wordmark: consultor solo vende pessoa, não sigla em quadradinho. */
 .brand {
-  font-size: 1.6rem;
-  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  letter-spacing: -0.04em;
+  gap: var(--space-3);
 }
 
-.brand-mark {
-  background: white;
-  color: black;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  font-weight: 800;
-  font-size: 1rem;
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
+.brand-meta {
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  line-height: 2;
+  text-transform: uppercase;
 }
 
 .navigation {
   display: flex;
-  gap: 2rem;
+  gap: var(--space-8);
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
+}
+
+.navigation a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
 
 .navigation a:hover {
   color: var(--text-primary);
 }
 
+/* Seção atual, marcada pelo scroll-spy. */
+.navigation a.is-current {
+  color: var(--text-primary);
+}
+
+.navigation a.is-current::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.5rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Botão do menu mobile, com o ícone desenhado em CSS. */
 .menu-button {
   display: none;
-  background: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: none;
-  color: white;
-  font-size: 1.5rem;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-primary);
   cursor: pointer;
+}
+
+.menu-button-icon,
+.menu-button-icon::before,
+.menu-button-icon::after {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transition:
+    transform 0.25s ease,
+    background-color 0.2s ease;
+}
+
+.menu-button-icon {
+  top: 50%;
+  left: 50%;
+  margin: -1px 0 0 -10px;
+}
+
+.menu-button-icon::before,
+.menu-button-icon::after {
+  content: '';
+  left: 0;
+}
+
+.menu-button-icon::before {
+  transform: translateY(-6px);
+}
+
+.menu-button-icon::after {
+  transform: translateY(6px);
+}
+
+/* Aberto: as três barras viram um X. */
+.menu-button[aria-expanded="true"] .menu-button-icon {
+  background: transparent;
+}
+
+.menu-button[aria-expanded="true"] .menu-button-icon::before {
+  transform: rotate(45deg);
+}
+
+.menu-button[aria-expanded="true"] .menu-button-icon::after {
+  transform: rotate(-45deg);
 }
 
 main,
@@ -358,15 +369,16 @@ main,
 
 /* Seções */
 .section {
-  padding: 7rem 0;
-  min-height: 60vh;
+  /* Sem min-height: o ritmo vem do padding. Uma altura mínima em vh
+     só acrescentaria espaço morto ao fim das seções mais curtas. */
+  padding: var(--space-28) 0;
 }
 
 .section--hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: calc(160px + 5rem);
+  padding-top: calc(64px + var(--space-16));
 }
 
 /* Hero */
@@ -375,31 +387,53 @@ main,
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
-  font-weight: 800;
-  line-height: 1.05;
+  /* Serifada de alto contraste pede corpo maior e entrelinha menor
+     que a grotesca de 800 que estava aqui. */
+  font-size: clamp(2.75rem, 6.5vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
-  margin-top: 1.75rem;
+  margin-top: var(--space-7);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   color: var(--text-secondary);
   max-width: 720px;
 }
 
 .hero-actions {
-  margin-top: 2.5rem;
+  margin-top: var(--space-10);
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
+/* Linha de cota: régua com marcas nas extremidades, ├────────┤ */
 .hero-support {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
+  position: relative;
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
   border-top: 1px solid var(--border-color);
   color: var(--text-muted);
   max-width: 620px;
+}
+
+.hero-support::before,
+.hero-support::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: var(--border-color);
+}
+
+.hero-support::before {
+  left: 0;
+}
+
+.hero-support::after {
+  right: 0;
 }
 
 /* Botões */
@@ -407,8 +441,8 @@ main,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.5rem;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
   border-radius: var(--radius-sm);
   font-size: 0.95rem;
   font-weight: 600;
@@ -418,17 +452,25 @@ main,
 }
 
 .btn-icon {
-  font-size: 18px;
-  line-height: 1;
+  flex: none;
+  width: 14px;
+  height: 14px;
 }
 
 .btn--primary {
-  background: var(--accent-color);
-  color: #000000;
+  background: var(--accent);
+  color: var(--bg-color);
 }
 
+/* Mantém o branco no hover: escurecer o botão principal lê como desabilitado. */
 .btn--primary:hover {
-  background: var(--text-secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px oklch(0.700 0.110 245 / 0.32);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .btn--ghost {
@@ -442,8 +484,9 @@ main,
   background: var(--accent-muted);
 }
 
-/* Efeito reveal ao rolar: componentes surgem de baixo com fade. */
-.reveal {
+/* O conteúdo nasce visível. O JavaScript adiciona .reveal-ready somente
+   depois de confirmar que o IntersectionObserver pode executar a animação. */
+.reveal.reveal-ready {
   opacity: 0;
   transform: translateY(40px);
   transition:
@@ -452,20 +495,20 @@ main,
   will-change: opacity, transform;
 }
 
-.reveal.is-visible {
+.reveal.reveal-ready.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Seções com cascata não se movem como bloco: o movimento fica por conta dos filhos. */
-.reveal:has(.reveal-group) {
+.reveal.reveal-ready:has(.reveal-group) {
   opacity: 1;
   transform: none;
   transition: none;
 }
 
 /* Cascata: cada filho direto do grupo entra em sequência quando o grupo aparece. */
-.reveal-group>* {
+.reveal-group.reveal-ready>* {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -474,7 +517,7 @@ main,
   transition-delay: calc(var(--reveal-start, 0ms) + var(--reveal-index, 0) * var(--reveal-step, 90ms));
 }
 
-.reveal-group.is-visible>* {
+.reveal-group.reveal-ready.is-visible>* {
   opacity: 1;
   transform: translateY(0);
 }
@@ -508,32 +551,161 @@ main,
   }
 }
 
-/* Footer */
+/* Footer editorial: a hierarquia tipográfica substitui as divisórias do
+   antigo carimbo técnico, preservando seus rótulos e metadados. */
 .site-footer {
-  padding: 2rem 0;
-  border-top: 1px solid var(--border-color);
+  padding: var(--space-16) 0 var(--space-8);
   color: var(--text-muted);
   font-size: 0.875rem;
 }
 
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.footer-intro {
+  display: grid;
+  gap: var(--space-2);
 }
 
-.footer-content a:hover {
-  color: var(--text-primary);
+.footer-eyebrow {
+  color: var(--accent);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
+
+.footer-signature {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.title-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.75fr);
+  gap: var(--space-16);
+  margin-top: var(--space-12);
+}
+
+.title-block-cell {
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+}
+
+.title-block-key {
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.title-block-value {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.title-block-note {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.title-block-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-top: var(--space-12);
+}
+
+.title-block-sheet {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Único ponto de acento aqui: amarra às seis seções numeradas 01–06. */
+.sheet-index {
+  color: var(--accent);
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
+  .menu-button.is-enhanced {
+    display: block;
+  }
+
+  /* Sem JavaScript, os links permanecem acessíveis em uma faixa horizontal.
+     Quando aprimorado, o mesmo nav assume o comportamento de painel. */
   .navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    gap: var(--space-5);
+    padding: 0 var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    background: oklch(0.150 0.008 250 / 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 1rem;
+    overflow-x: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    scrollbar-width: none;
+  }
+
+  .navigation::-webkit-scrollbar {
     display: none;
   }
 
-  .menu-button {
-    display: block;
+  .navigation.is-enhanced {
+    flex-direction: column;
+    gap: 0;
+    padding: 0 var(--space-6) var(--space-2);
+    overflow: visible;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s;
+  }
+
+  .navigation.is-enhanced.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navigation a {
+    flex: none;
+    padding: var(--space-3) 0;
+    white-space: nowrap;
+  }
+
+  .navigation.is-enhanced a {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .navigation.is-enhanced a:last-child {
+    border-bottom: none;
+  }
+
+  /* No painel mobile a cor já basta: o sublinhado colidiria com a divisória. */
+  .navigation a.is-current::after {
+    display: none;
   }
 }
 
@@ -544,27 +716,33 @@ main,
 /* Títulos e cabeçalhos de seção */
 .section-heading {
   max-width: 760px;
-  margin-bottom: 4rem;
+  margin-bottom: var(--space-16);
 }
 
 .section-heading h2,
 .diagnostic-content h2,
 .contact-content h2 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(2.15rem, 4.3vw, 3.85rem);
   max-width: 880px;
+  line-height: 1.06;
+  letter-spacing: -0.018em;
 }
 
 .section-heading>p:last-child,
 .diagnostic-content>div>p,
 .contact-content>div>p {
   max-width: 720px;
-  margin-top: 1.5rem;
+  margin-top: var(--space-6);
   font-size: 1.05rem;
 }
 
+/* Rótulo de seção no vocabulário do desenho técnico: índice em âmbar,
+   legenda, e uma linha de cota que se estende até o fim da medida. */
 .section-label {
-  display: inline-block;
-  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
   color: var(--text-muted);
   font-size: 0.72rem;
   font-weight: 500;
@@ -572,22 +750,30 @@ main,
   text-transform: uppercase;
 }
 
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.section-index {
+  color: var(--accent);
+}
+
 /* Serviços */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .service-card {
   min-height: 260px;
-  padding: 1.75rem;
+  padding: var(--space-7);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background:
-    linear-gradient(145deg,
-      rgba(255, 255, 255, 0.035),
-      rgba(255, 255, 255, 0.01));
+  background: var(--bg-panel);
   transition:
     transform 0.25s ease,
     border-color 0.25s ease,
@@ -596,26 +782,23 @@ main,
 
 .service-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-hover);
-  background-color: rgba(255, 255, 255, 0.035);
+  border-color: var(--accent);
+  background-color: var(--bg-raised);
 }
 
-.service-card>.material-symbols-outlined {
-  display: inline-flex;
-  margin-bottom: 2.5rem;
-  color: var(--text-primary);
-  font-size: 1.75rem;
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 300,
-    'GRAD' 0,
-    'opsz' 32;
+/* Índice do card, no lugar do ícone genérico: 02.1, 02.2, ... */
+.card-index {
+  display: block;
+  margin-bottom: var(--space-10);
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
 }
 
 .service-card h3 {
-  margin-bottom: 0.85rem;
+  margin-bottom: var(--space-3);
   font-size: 1.2rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
 }
 
 .service-card p {
@@ -635,8 +818,8 @@ main,
   position: relative;
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr);
-  gap: 2rem;
-  padding: 2rem 0;
+  gap: var(--space-8);
+  padding: var(--space-8) 0;
 }
 
 .methodology-list li:not(:last-child)::before,
@@ -655,7 +838,7 @@ main,
 }
 
 .methodology-list li:not(:last-child)::after {
-  background: var(--text-primary);
+  background: var(--accent);
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -676,7 +859,7 @@ main,
   padding: 0;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  background: var(--bg-primary);
+  background: var(--bg-color);
   color: var(--text-muted);
   font-size: 0.78rem;
   transition:
@@ -686,13 +869,13 @@ main,
 }
 
 .methodology-list li.is-active .methodology-number {
-  border-color: var(--text-primary);
-  background: var(--text-primary);
-  color: var(--bg-primary);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg-color);
 }
 
 .methodology-list h3 {
-  margin-bottom: 0.65rem;
+  margin-bottom: var(--space-3);
   font-size: clamp(1.35rem, 2vw, 1.75rem);
 }
 
@@ -712,7 +895,7 @@ main,
 .experience-content {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  gap: 4rem;
+  gap: var(--space-16);
   align-items: start;
 }
 
@@ -726,19 +909,29 @@ main,
 
 .experience-highlights {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .experience-highlights article {
-  padding: 1.5rem;
+  padding: var(--space-6);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-panel);
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* Sem translateY aqui: estes são valores, não algo a acionar.
+   A elevação do .service-card sugeriria um clique que não existe. */
+.experience-highlights article:hover {
+  border-color: var(--accent);
+  background-color: var(--bg-raised);
 }
 
 .experience-highlights strong {
   display: block;
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--space-1);
   font-size: 1.7rem;
   line-height: 1.1;
 }
@@ -751,18 +944,25 @@ main,
 .expertise-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 4rem;
+  gap: var(--space-4);
+  margin-top: var(--space-16);
 }
 
 .expertise-grid article {
-  padding-top: 1.5rem;
+  padding-top: var(--space-6);
   border-top: 1px solid var(--border-color);
+  transition: border-color 0.25s ease;
+}
+
+/* Este componente não tem moldura, então quem responde é o filete. */
+.expertise-grid article:hover {
+  border-color: var(--accent);
 }
 
 .expertise-grid h3 {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
   font-size: 1rem;
+  letter-spacing: 0;
 }
 
 .expertise-grid p {
@@ -774,35 +974,36 @@ main,
 .diagnostic-content {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 0.8fr);
-  gap: 4rem;
+  gap: var(--space-16);
   align-items: start;
 }
 
 .diagnostic-card {
-  padding: 2rem;
+  padding: var(--space-8);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(circle at top right, rgba(255, 255, 255, 0.07), transparent 40%),
+    radial-gradient(circle at top right, var(--accent-wash), transparent 45%),
     var(--bg-panel);
 }
 
 .diagnostic-card h3 {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
   font-size: 1.25rem;
+  letter-spacing: -0.01em;
 }
 
 .diagnostic-card ul {
   display: grid;
-  gap: 0.75rem;
-  margin: 0 0 1.75rem;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-7);
   padding: 0;
   list-style: none;
 }
 
 .diagnostic-card li {
   position: relative;
-  padding-left: 1.35rem;
+  padding-left: var(--space-5);
   color: var(--text-secondary);
 }
 
@@ -814,16 +1015,16 @@ main,
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--text-primary);
+  background: var(--accent);
 }
 
 .diagnostic-card p {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .diagnostic-card small {
   display: block;
-  margin-top: 1.25rem;
+  margin-top: var(--space-5);
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -832,14 +1033,14 @@ main,
 .contact-content {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr);
-  gap: 4rem;
+  gap: var(--space-16);
   align-items: start;
 }
 
 .contact-form {
   display: grid;
-  gap: 1.1rem;
-  padding: 2rem;
+  gap: var(--space-4);
+  padding: var(--space-8);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background: var(--bg-panel);
@@ -847,10 +1048,29 @@ main,
 
 .contact-form label {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--space-2);
   color: var(--text-secondary);
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+/* Mensagem de erro do campo. Vazia, some — senão o grid do label
+   abriria uma linha de gap sem conteúdo. */
+.field-error {
+  color: var(--color-error);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+
+/* Só um campo é opcional; marcá-lo evita três asteriscos e diz o mesmo. */
+.field-optional {
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 .contact-form input,
@@ -858,11 +1078,10 @@ main,
   width: 100%;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  padding: 0.9rem 1rem;
+  padding: var(--space-4) var(--space-4);
   color: var(--text-primary);
-  background: #050505;
+  background: var(--bg-color);
   font: inherit;
-  outline: none;
   transition: var(--transition);
 }
 
@@ -871,10 +1090,33 @@ main,
   border-color: var(--border-hover);
 }
 
+/* Campo ativo assume o acento: mesma cor que marca a seção atual e o card
+   sob o cursor, então o azul passa a significar sempre "é aqui que você está". */
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--text-secondary);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+  border-color: var(--accent);
+}
+
+/* Um halo só, encostado na borda. Antes eram três linhas concêntricas —
+   borda de 1px, folga de 2px e contorno de 2px — que somadas liam como
+   borda dupla. O contorno transparente existe para o modo de alto
+   contraste forçado, onde box-shadow é descartado e outline sobrevive. */
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* Erro precisa vencer o foco: por isso vem depois, a especificidade é a mesma. */
+.contact-form input[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.contact-form input[aria-invalid="true"]:focus-visible,
+.contact-form textarea[aria-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring-error);
 }
 
 .contact-form textarea {
@@ -884,7 +1126,7 @@ main,
 
 .contact-form .btn {
   justify-self: start;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 
 .contact-form .btn:disabled {
@@ -892,12 +1134,18 @@ main,
   opacity: 0.65;
 }
 
+/* Honeypot: recortado no lugar em vez de jogado para fora da tela,
+   que era o que exigia o overflow-x: hidden no body. */
 .form-trap {
   position: absolute;
-  left: -10000px;
   width: 1px;
   height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .form-status {
@@ -908,11 +1156,11 @@ main,
 }
 
 .form-status.is-success {
-  color: #86efac;
+  color: var(--color-success);
 }
 
 .form-status.is-error {
-  color: #fca5a5;
+  color: oklch(0.75 0.15 25);
 }
 
 .form-note {
@@ -928,15 +1176,13 @@ main,
   font-size: 0.82rem;
 }
 
-.contact-support a,
-.footer-links a {
+.contact-support a {
   color: var(--text-secondary);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
-.contact-support a:hover,
-.footer-links a:hover {
+.contact-support a:hover {
   color: var(--text-primary);
 }
 
@@ -944,9 +1190,9 @@ main,
 #servicos,
 #experiencia,
 #contato {
-  background: rgba(9, 9, 11, 0.68);
-  border-top: 1px solid rgba(255, 255, 255, 0.025);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.025);
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* Compensa o header fixo ao navegar pelas âncoras */
@@ -954,22 +1200,33 @@ section[id] {
   scroll-margin-top: 64px;
 }
 
-/* Footer compatível com o HTML atualizado */
-.site-footer .container {
+
+/* Perfis como marca. O alvo de 40px atende ao mínimo da WCAG 2.2 §2.5.8 com
+   folga, e a margem negativa alinha visualmente os desenhos dos SVGs. */
+.footer-links {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: var(--space-1);
+  margin-left: -10px;
 }
 
-.site-footer p {
-  margin: 0;
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
   color: var(--text-muted);
 }
 
-.footer-links {
-  display: flex;
-  gap: 1.25rem;
-  font-size: 0.875rem;
+.footer-links a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.footer-links svg {
+  width: 24px;
+  height: 24px;
 }
 
 /* =========================================================
@@ -985,7 +1242,7 @@ section[id] {
   .diagnostic-content,
   .contact-content {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: var(--space-10);
   }
 
   .expertise-grid {
@@ -1000,17 +1257,16 @@ section[id] {
 
 @media (max-width: 768px) {
   .section {
-    min-height: auto;
-    padding: 5rem 0;
+    padding: var(--space-20) 0;
   }
 
   .section--hero {
     min-height: 100svh;
-    padding-top: calc(64px + 4rem);
+    padding-top: calc(64px + var(--space-16));
   }
 
   .section-heading {
-    margin-bottom: 2.75rem;
+    margin-bottom: var(--space-12);
   }
 
   .services-grid,
@@ -1020,26 +1276,37 @@ section[id] {
 
   .methodology-list li {
     grid-template-columns: 44px minmax(0, 1fr);
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .service-card {
     min-height: auto;
   }
 
-  .service-card>.material-symbols-outlined {
-    margin-bottom: 1.75rem;
+  .card-index {
+    margin-bottom: var(--space-7);
   }
 
   .contact-form,
   .diagnostic-card {
-    padding: 1.5rem;
+    padding: var(--space-6);
   }
 
-  .site-footer .container {
-    align-items: flex-start;
+  .title-block {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    margin-top: var(--space-10);
+  }
+
+  .title-block-cell {
+    padding: 0;
+  }
+
+  .title-block-footer {
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
   }
 }
 
@@ -1048,14 +1315,13 @@ section[id] {
     width: min(100% - 2rem, var(--container-width));
   }
 
-  .brand {
-    font-size: 1rem;
+  .brand-name {
+    font-size: 1.15rem;
   }
 
-  .brand-mark {
-    width: 30px;
-    height: 30px;
-    font-size: 0.85rem;
+  /* Sem espaço para o descritor ao lado do nome nesta largura. */
+  .brand-meta {
+    display: none;
   }
 
   .hero-actions,
@@ -1069,5 +1335,33 @@ section[id] {
   .diagnostic-card .btn,
   .contact-form .btn {
     text-align: center;
+  }
+}
+
+/* =========================================================
+   Preferências do sistema
+   ========================================================= */
+
+/* Mais contraste: bordas deixam de ser sussurro e viram estrutura. */
+@media (prefers-contrast: more) {
+  :root {
+    --border-color: oklch(0.520 0.014 250);
+    --border-hover: oklch(0.640 0.016 250);
+    --text-secondary: oklch(0.880 0.006 250);
+    --text-muted: oklch(0.780 0.010 250);
+  }
+
+}
+
+/* Menos transparência: o header fixo passa a ser opaco, sem blur. */
+@media (prefers-reduced-transparency: reduce) {
+  .site-header {
+    background: var(--bg-color);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .navigation {
+    background: var(--bg-color);
   }
 }

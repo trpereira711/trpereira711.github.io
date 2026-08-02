@@ -23,7 +23,11 @@ if ("IntersectionObserver" in window && revealElements.length) {
     { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
   );
 
-  revealElements.forEach((el) => revealObserver.observe(el));
+  // Só esconde elementos depois que o mecanismo que voltará a exibi-los existe.
+  revealElements.forEach((el) => {
+    el.classList.add("reveal-ready");
+    revealObserver.observe(el);
+  });
 } else {
   // Fallback: sem suporte a IntersectionObserver, mostra tudo.
   revealElements.forEach((el) => el.classList.add("is-visible"));
@@ -62,9 +66,57 @@ if ("IntersectionObserver" in window && methodologySteps.length) {
   });
 }
 
+// Scroll-spy: marca no menu a seção que está sendo lida.
+const navLinks = Array.from(document.querySelectorAll(".navigation a[href^='#']"));
+const navTargets = navLinks
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+if ("IntersectionObserver" in window && navTargets.length) {
+  const inBand = new Set();
+
+  const highlightCurrent = () => {
+    // Em ordem de documento, a primeira seção dentro da faixa é a atual.
+    const current = navTargets.find((section) => inBand.has(section));
+
+    navLinks.forEach((link) => {
+      const isCurrent = Boolean(current) && link.getAttribute("href") === `#${current.id}`;
+      link.classList.toggle("is-current", isCurrent);
+
+      if (isCurrent) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          inBand.add(entry.target);
+        } else {
+          inBand.delete(entry.target);
+        }
+      });
+
+      highlightCurrent();
+    },
+    // Faixa estreita perto do topo, logo abaixo do header fixo.
+    { rootMargin: "-20% 0px -75% 0px" }
+  );
+
+  navTargets.forEach((section) => navObserver.observe(section));
+}
+
 const contactForm = document.querySelector("#contact-form");
 
 if (contactForm) {
+  // Com JavaScript ativo, usamos as mensagens acessíveis abaixo. Sem ele,
+  // o atributo novalidate não existe no HTML e o navegador valida o formulário.
+  contactForm.noValidate = true;
+
   const submitButton = contactForm.querySelector('button[type="submit"]');
   const buttonLabel = submitButton.querySelector(".button-label");
   const formStatus = contactForm.querySelector(".form-status");
@@ -77,8 +129,54 @@ if (contactForm) {
     mensagem: 3000
   };
 
+  // Validação por campo: o formulário usa novalidate, então a mensagem
+  // fica presa ao campo via aria-describedby em vez de num balão do browser.
+  const validators = {
+    nome: (value) => (value.trim() ? "" : "Informe seu nome."),
+    email: (value) => {
+      if (!value.trim()) return "Informe seu e-mail.";
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+        ? ""
+        : "Informe um e-mail válido.";
+    },
+    mensagem: (value) => (value.trim() ? "" : "Descreva brevemente o contexto do sistema.")
+  };
+
+  const setFieldError = (field, message) => {
+    const errorNode = contactForm.querySelector(`#erro-${field.name}`);
+    if (errorNode) errorNode.textContent = message;
+
+    if (message) {
+      field.setAttribute("aria-invalid", "true");
+    } else {
+      field.removeAttribute("aria-invalid");
+    }
+  };
+
+  // O erro some assim que a pessoa começa a corrigir.
+  Object.keys(validators).forEach((name) => {
+    const field = contactForm.elements[name];
+    if (field) field.addEventListener("input", () => setFieldError(field, ""));
+  });
+
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const invalidFields = Object.entries(validators)
+      .map(([name, validate]) => {
+        const field = contactForm.elements[name];
+        const message = field ? validate(field.value) : "";
+        if (field) setFieldError(field, message);
+        return message ? field : null;
+      })
+      .filter(Boolean);
+
+    if (invalidFields.length) {
+      formStatus.textContent = `Revise ${invalidFields.length === 1 ? "o campo destacado" : "os campos destacados"} antes de enviar.`;
+      formStatus.className = "form-status is-error";
+      invalidFields[0].focus();
+      return;
+    }
 
     const formData = new FormData(contactForm);
     const hasOversizedField = Object.entries(fieldLimits).some(([field, limit]) => {
@@ -115,6 +213,10 @@ if (contactForm) {
       }
 
       contactForm.reset();
+      Object.keys(validators).forEach((name) => {
+        const field = contactForm.elements[name];
+        if (field) setFieldError(field, "");
+      });
       formStatus.textContent = "Mensagem enviada. Retornarei o contato assim que possível.";
       formStatus.classList.add("is-success");
     } catch (error) {
@@ -129,15 +231,28 @@ if (contactForm) {
 }
 
 if (menuButton && navigation) {
+  const closeMenu = () => {
+    navigation.classList.remove("is-open");
+    menuButton.setAttribute("aria-expanded", "false");
+  };
+
   menuButton.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("is-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
   });
 
   navigation.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navigation.classList.remove("is-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", closeMenu);
   });
+
+  // Esc fecha o menu e devolve o foco ao botão.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !navigation.classList.contains("is-open")) return;
+    closeMenu();
+    menuButton.focus();
+  });
+
+  // Ativa o menu recolhível somente depois que todos os controles existem.
+  menuButton.classList.add("is-enhanced");
+  navigation.classList.add("is-enhanced");
 }

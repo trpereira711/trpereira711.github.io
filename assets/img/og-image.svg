@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.055"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#17191d" stop-opacity="0"/>
+      <stop offset="0.25" stop-color="#17191d"/>
+      <stop offset="0.75" stop-color="#17191d"/>
+      <stop offset="1" stop-color="#17191d" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#17191d"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#fade)" opacity="0.72"/>
+
+  <g fill="none" stroke="#30353d">
+    <path d="M72 72h48M72 72v48M1128 72h-48M1128 72v48M72 558h48M72 558v-48M1128 558h-48M1128 558v-48"/>
+    <path d="M72 148h1056"/>
+  </g>
+
+  <g fill="#63a8d4">
+    <circle cx="72" cy="148" r="4"/>
+    <circle cx="1128" cy="148" r="4"/>
+  </g>
+
+  <text x="72" y="116" fill="#8f98a3" font-family="'Courier New', monospace" font-size="16" letter-spacing="3">01 / ENGENHARIA DE SOFTWARE</text>
+
+  <g fill="#f2f3f4" font-family="Georgia, 'Times New Roman', serif" font-size="68" letter-spacing="-1.5">
+    <text x="72" y="231">Engenharia de</text>
+    <text x="72" y="303">software para</text>
+    <text x="72" y="375">sistemas Java.</text>
+  </g>
+
+  <text x="76" y="466" fill="#b7bdc5" font-family="Arial, Helvetica, sans-serif" font-size="22">
+    Arquitetura, modernização, desenvolvimento e qualidade.
+  </text>
+
+  <g transform="translate(72 516)">
+    <rect width="42" height="42" rx="7" fill="#63a8d4"/>
+    <text x="21" y="28" fill="#17191d" font-family="Georgia, 'Times New Roman', serif" font-size="18" text-anchor="middle">TP</text>
+    <text x="60" y="18" fill="#f2f3f4" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600">Thiago Roberto Pereira</text>
+    <text x="60" y="39" fill="#8f98a3" font-family="'Courier New', monospace" font-size="12" letter-spacing="1.5">ENGENHEIRO DE SOFTWARE</text>
+  </g>
+
+  <text x="1128" y="546" fill="#63a8d4" font-family="'Courier New', monospace" font-size="13" letter-spacing="2" text-anchor="end">BRASÍLIA / BRASIL</text>
+</svg>

@@ -4,8 +4,9 @@ Este repositório hospeda meu site pessoal/profissional publicado via GitHub Pag
 
 ## Objetivo do site
 
-Apresentar meus serviços de consultoria técnica para empresas que precisam de apoio especializado em sistemas Java corporativos, incluindo:
+Apresentar meus serviços de engenharia de software para empresas que precisam construir, modernizar ou evoluir sistemas Java corporativos, incluindo:
 
+- Desenvolvimento de sistemas Java
 - Diagnóstico técnico de aplicações Java/Spring
 - Modernização de sistemas legados
 - Desenvolvimento e evolução de APIs REST

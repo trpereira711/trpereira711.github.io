@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#17191d"/>
+  <path d="M12 13h40M12 51h40M13 12v40M51 12v40" fill="none" stroke="#30353d" stroke-width="1"/>
+  <path d="M32 7v5M32 52v5M7 32h5M52 32h5" fill="none" stroke="#63a8d4" stroke-width="2"/>
+  <text x="32" y="39" fill="#f2f3f4" font-family="Georgia, 'Times New Roman', serif" font-size="24" text-anchor="middle">TP</text>
+</svg>
