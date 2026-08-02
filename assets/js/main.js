@@ -46,18 +46,19 @@ if ("IntersectionObserver" in window && methodologySteps.length) {
         methodologyObserver.unobserve(entry.target);
       });
 
-      const progress = methodologySteps.length > 1
-        ? furthestStep / (methodologySteps.length - 1)
-        : 1;
-      methodologyList.style.setProperty("--timeline-progress", String(progress));
+      methodologySteps.forEach((step, index) => {
+        if (index < furthestStep) step.classList.add("is-complete");
+      });
     },
     { threshold: 0.55, rootMargin: "0px 0px -12% 0px" }
   );
 
   methodologySteps.forEach((step) => methodologyObserver.observe(step));
 } else if (methodologySteps.length) {
-  methodologySteps.forEach((step) => step.classList.add("is-active"));
-  methodologyList.style.setProperty("--timeline-progress", "1");
+  methodologySteps.forEach((step, index) => {
+    step.classList.add("is-active");
+    if (index < methodologySteps.length - 1) step.classList.add("is-complete");
+  });
 }
 
 const contactForm = document.querySelector("#contact-form");

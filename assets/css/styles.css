@@ -582,33 +582,10 @@ main,
 
 /* Metodologia */
 .methodology-list {
-  --timeline-progress: 0;
   position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.methodology-list::before,
-.methodology-list::after {
-  content: '';
-  position: absolute;
-  top: 3.125rem;
-  left: 17.5px;
-  width: 1px;
-  height: calc(100% - 6.25rem);
-  pointer-events: none;
-}
-
-.methodology-list::before {
-  background: var(--border-color);
-}
-
-.methodology-list::after {
-  background: var(--text-primary);
-  transform: scaleY(var(--timeline-progress));
-  transform-origin: top;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .methodology-list li {
@@ -617,6 +594,32 @@ main,
   grid-template-columns: 72px minmax(0, 1fr);
   gap: 2rem;
   padding: 2rem 0;
+}
+
+.methodology-list li:not(:last-child)::before,
+.methodology-list li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 3.125rem;
+  bottom: -3.125rem;
+  left: 17.5px;
+  width: 1px;
+  pointer-events: none;
+}
+
+.methodology-list li:not(:last-child)::before {
+  background: var(--border-color);
+}
+
+.methodology-list li:not(:last-child)::after {
+  background: var(--text-primary);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.methodology-list li.is-complete::after {
+  transform: scaleY(1);
 }
 
 .methodology-number {
@@ -656,7 +659,7 @@ main,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .methodology-list::after,
+  .methodology-list li::after,
   .methodology-number {
     transition: none;
   }
