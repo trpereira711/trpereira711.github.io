@@ -374,6 +374,42 @@ main,
   padding: var(--space-28) 0;
 }
 
+/* Faixas visuais entre as seções. Cada uma revela uma região diferente da
+   imagem para que o padrão não pareça simplesmente repetido. */
+.section-divider {
+  width: 100%;
+  height: clamp(64px, 7vw, 104px);
+  box-sizing: border-box;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  background-image: url('../img/landing-background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center var(--divider-position, 50%);
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.section-divider--01 {
+  --divider-position: 14%;
+}
+
+.section-divider--02 {
+  --divider-position: 32%;
+}
+
+.section-divider--03 {
+  --divider-position: 50%;
+}
+
+.section-divider--04 {
+  --divider-position: 68%;
+}
+
+.section-divider--05 {
+  --divider-position: 86%;
+}
+
 .section--hero {
   min-height: 100vh;
   display: flex;
@@ -1186,13 +1222,11 @@ main,
   color: var(--text-primary);
 }
 
-/* Melhor separação visual das seções */
+/* As faixas adjacentes fazem a separação; estas seções mudam apenas de tom. */
 #servicos,
 #experiencia,
 #contato {
   background: var(--bg-panel);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
 }
 
 /* Compensa o header fixo ao navegar pelas âncoras */
