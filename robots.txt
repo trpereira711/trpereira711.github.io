@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://trpereira711.github.io/sitemap.xml
+Sitemap: https://trpsoftware.com.br/sitemap.xml
