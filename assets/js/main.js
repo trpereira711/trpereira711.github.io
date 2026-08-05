@@ -252,6 +252,17 @@ if (menuButton && navigation) {
     menuButton.focus();
   });
 
+  // Fecha o menu se o foco sair da navegação e do botão
+  document.addEventListener("focusin", (event) => {
+    if (
+      navigation.classList.contains("is-open") &&
+      !navigation.contains(event.target) &&
+      !menuButton.contains(event.target)
+    ) {
+      closeMenu();
+    }
+  });
+
   // Ativa o menu recolhível somente depois que todos os controles existem.
   menuButton.classList.add("is-enhanced");
   navigation.classList.add("is-enhanced");

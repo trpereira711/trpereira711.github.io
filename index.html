@@ -129,7 +129,7 @@
     </div>
   </header>
 
-  <main id="conteudo">
+  <main id="conteudo" tabindex="-1">
     <section id="inicio" class="section section--hero reveal">
       <div class="container hero-content reveal-group">
         <p class="section-label mono"><span class="section-index">01</span>Sistemas Java corporativos</p>
@@ -357,15 +357,29 @@
         <form id="contact-form" class="contact-form" action="https://formspree.io/f/xrenrjbg" method="POST">
           <input class="form-trap" type="text" name="_gotcha" maxlength="100" tabindex="-1" autocomplete="off"
             aria-hidden="true">
-          <label>Nome<input type="text" name="nome" maxlength="100" autocomplete="name" required
-              aria-describedby="erro-nome"><span class="field-error" id="erro-nome"></span></label>
-          <label><span>Empresa <span class="field-optional">(opcional)</span></span><input type="text" name="empresa"
-                maxlength="120" autocomplete="organization"></label>
-          <label>E-mail<input type="email" name="email" maxlength="254" autocomplete="email" required
-              aria-describedby="erro-email"><span class="field-error" id="erro-email"></span></label>
-          <label>Como posso ajudar?<textarea name="mensagem" rows="6"
+          <div class="form-group">
+            <label for="campo-nome">Nome</label>
+            <input type="text" id="campo-nome" name="nome" maxlength="100" autocomplete="name" required
+              aria-describedby="erro-nome">
+            <span class="field-error" id="erro-nome"></span>
+          </div>
+          <div class="form-group">
+            <label for="campo-empresa"><span>Empresa <span class="field-optional">(opcional)</span></span></label>
+            <input type="text" id="campo-empresa" name="empresa" maxlength="120" autocomplete="organization">
+          </div>
+          <div class="form-group">
+            <label for="campo-email">E-mail</label>
+            <input type="email" id="campo-email" name="email" maxlength="254" autocomplete="email" required
+              aria-describedby="erro-email">
+            <span class="field-error" id="erro-email"></span>
+          </div>
+          <div class="form-group">
+            <label for="campo-mensagem">Como posso ajudar?</label>
+            <textarea id="campo-mensagem" name="mensagem" rows="6"
               placeholder="Descreva o sistema, o problema atual e o impacto que ele está causando."
-              maxlength="3000" required aria-describedby="erro-mensagem"></textarea><span class="field-error" id="erro-mensagem"></span></label>
+              maxlength="3000" required aria-describedby="erro-mensagem"></textarea>
+            <span class="field-error" id="erro-mensagem"></span>
+          </div>
           <p class="form-note">Não envie senhas, credenciais, código-fonte ou informações confidenciais por este
             formulário.</p>
           <button type="submit" class="btn btn--primary">
