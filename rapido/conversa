@@ -1,0 +1,51 @@
+Redesenho de Site para Estilo Moderno
+https://gemini.google.com/app/28c712284fac22f0
+
+User prompt: eu quero mudar essa proposta do meu site... hoje está muito corporativista.. eu gostaria de algo mais moderno com essa proposta da atekitadev: https://attekitadev.com/ https://trpsoftware.com.br/
+Response: Comparando os dois sites, o diagnóstico fica muito claro:
+O seu site atual (trpsoftware.com.br): Tem uma estrutura de proposta comercial/B2B ("folhas numeradas", tons sérios/monocromáticos, foco pesado em termos de consultoria como "diagnóstico técnico", "análise de riscos", "metodologia em 5 passos"). Ele soa como uma empresa tradicional de auditoria de software.
+O site da Attekita (attekitadev.com): É um portfólio moderno focado em Personal Branding (marca pessoal). É vibrante, dinâmico, visual, humanizado e focado em conquistas, projetos reais e comunidade — sem perder a autoridade técnica sênior.
+Aqui está o plano de ação prático para você transformar seu site e adotar essa mesma linguagem:
+1. Mudança de Tom: De "Consultoria Corporativa" para "Autoridade Pessoal"
+No modelo da Karol Attekita, a autoridade não vem de promessas de processo formal, mas de mostrar quem você é e o impacto do que você faz:
+Hero Section (Topo):
+Como está hoje: "01 Sistemas Java corporativos — Engenharia de software para sistemas Java..."
+No novo modelo: Foto profissional e expressiva sua em destaque. Headline curta e de impacto:"Olá! Sou Thiago Roberto Pereira — Arquiteto de Software & Engenheiro Backend."
+"Construindo e modernizando sistemas de alta escala e missão crítica há mais de 15 anos."
+Adicione links diretos para seu GitHub, LinkedIn e canais de contato logo na primeira dobra.
+2. Identidade Visual e UI/UX (A estética moderna)
+O site da Attekita usa tendências fortes de design tech moderno:
+Dark Mode Sofisticado ou Cores com Acento: Em vez do esquema acinzentado/corporativo atual, use um fundo neutro escuro (ou claro) com acentos modernos (por exemplo, degradês sutis, bordas translúcidas com efeito glassmorphism, tipografia sans-serif limpa e moderna como Inter, Plus Jakarta Sans ou Geist).
+Marquee / Ticker animado: Ela usa um banner contínuo em movimento com palavras-chave (Backend • Java • Spring • Arquitetura Hexagonal • Cloud). Isso traz dinamismo imediato.
+Badges e Tags Visuais: Em vez de blocos longos de texto, use badges arredondadas para stacks e habilidades (Java 21, Spring Boot, Microsserviços, AWS, Kafka).
+Números em Destaque (Impact Counters):
+Em vez de listas de tópicos, use blocos com números grandes:
++15 Anos de Experiência
+Missão Crítica Governo, Finanças e Saúde
+Clean Code & DDD Foco em manutenibilidade e escala
+3. Reformulação da Estrutura de Seções
+Substitua a estrutura de "proposta de consultoria" por blocos dinâmicos de portfólio:
+
+Seção Atual
+Nova Seção (Estilo AttekitaDev)
+Como abordar
+02 Onde posso ajudar (Serviços)
+Áreas de Domínio / Hard Skills
+Cards visuais modernos: Arquitetura & DDD, Modernização de Legados, APIs & Integrações, Performance & Confiabilidade.
+03 Como trabalho (Etapas textuais)
+Filosofia de Engenharia
+Cards com ícones e visual limpo resumindo seus princípios de desenvolvimento (ex: Código Limpo, Arquitetura Sustentável, Entrega Contínua).
+04 Experiência (Resumo longo)
+Projetos em Destaque (Featured Projects)
+Apresente casos reais (mesmo que com nomes anonimizados se houver NDA, ex: "Plataforma de Gestão Governamental", "Core Bancário de Liquidação"), mostrando: problema, solução, prints/diagramas visuais e tags das tecnologias.
+(Não tem hoje)
+Comunidade, Artigos e Presença Técnica
+Um bloco destacando artigos técnicos, participações em eventos/meetups ou tópicos que você discute ativamente (mostra que você é uma referência ativa no ecossistema Java).
+06 Formulário formal de contato
+Call to Action (CTA) Amigável e Direto
+"Vamos trocar uma ideia sobre arquitetura ou seu próximo projeto?" com botão direto para LinkedIn, E-mail ou WhatsApp, além de um formulário simplificado.
+
+4. Dica de Implementação Técnica
+Para alcançar esse visual fluido e contemporâneo com rapidez:
+Se você estiver usando React/Next.js/Astro, adote componentes da biblioteca shadcn/ui combinados com Tailwind CSS e Framer Motion (ou Aceternity UI, que possui exatamente os efeitos de cards dinâmicos, spotlight, marquee e gradientes característicos dos sites modernos de desenvolvedores).
+
