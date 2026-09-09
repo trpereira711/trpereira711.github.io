@@ -1,98 +1,96 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, ArrowRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex-1 flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background gradient effects (Glassmorphism / Modern vibe) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] opacity-50 pointer-events-none" />
+    <main className="flex-1 flex flex-col bg-black overflow-x-hidden min-h-screen">
+      {/* Welcome / Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center">
         
-        <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-5xl">
-          <div className="flex flex-col items-center text-center space-y-8">
-            
-            {/* Animated Profile Image placeholder or initials */}
+        {/* Top Brand / Avatar (Like Attekita's Top-Left) */}
+        <div className="absolute top-8 left-6 md:top-14 md:left-12 flex items-center gap-4 z-20">
+          {/* Avatar com borda colorida */}
+          <div className="w-16 h-16 md:w-24 md:h-24 border-4 md:border-8 border-emerald-500 rounded-full bg-zinc-800 flex items-center justify-center text-emerald-500 font-bold text-xl md:text-3xl">
+            TP
+          </div>
+          <div className="text-white font-bold text-xl tracking-wider hidden md:block">
+            THIAGO<span className="text-emerald-500">.</span>DEV
+          </div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="container px-6 relative z-10 w-full flex justify-center">
+          <div className="max-w-4xl w-full">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="relative w-32 h-32 rounded-full border-4 border-background shadow-xl overflow-hidden ring-2 ring-primary/20"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight"
             >
-              <div className="w-full h-full bg-muted flex items-center justify-center text-3xl font-bold">
-                TP
-              </div>
+              Olá! Sou Thiago Roberto Pereira, <br className="hidden md:block" />
+              <span className="text-emerald-500">Arquiteto de Software</span> e <br className="hidden md:block" /> Engenheiro Backend.
             </motion.div>
 
-            {/* Headline */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="space-y-4"
+            {/* Links styled like Attekita's */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="flex flex-wrap text-sm md:text-base text-emerald-500 gap-6 md:gap-8 pt-8"
             >
-              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-                Olá! Sou Thiago Roberto Pereira
-              </h1>
-              <h2 className="text-xl md:text-3xl text-primary font-medium">
-                Arquiteto de Software & Engenheiro Backend
-              </h2>
-            </motion.div>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="max-w-[600px] text-lg md:text-xl text-muted-foreground"
-            >
-              Construindo e modernizando sistemas de alta escala e missão crítica há mais de 15 anos.
-            </motion.p>
-
-            {/* CTA & Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap items-center justify-center gap-4 pt-4"
-            >
-              <a
-                href="#contato"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-              >
-                Vamos trocar uma ideia
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <a href="https://linkedin.com/in/thiago-roberto-pereira" target="_blank" className="flex items-center hover:text-emerald-400 transition-colors">
+                LinkedIn <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
               </a>
-              <a
-                href="https://github.com/trpereira711"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
-              >
-                <GithubIcon className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
+              <a href="https://github.com/trpereira711" target="_blank" className="flex items-center hover:text-emerald-400 transition-colors">
+                GitHub <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
               </a>
-              <a
-                href="https://linkedin.com/in/thiago-roberto-pereira"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
-              >
-                <LinkedinIcon className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </a>
-              <a
-                href="mailto:seu-email@exemplo.com"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
-              >
-                <Mail className="h-5 w-5" />
-                <span className="sr-only">E-mail</span>
+              <a href="#contato" className="flex items-center hover:text-emerald-400 transition-colors">
+                Contato <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
               </a>
             </motion.div>
           </div>
+        </div>
+
+        {/* Ticker / Marquee styled exactly like the Attekita's bottom bar */}
+        <div className="bg-emerald-500 h-14 md:h-16 absolute left-0 right-0 bottom-0 flex items-center overflow-hidden z-20">
+          <motion.div
+            className="flex whitespace-nowrap text-black font-extrabold text-lg md:text-xl uppercase tracking-widest"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 20,
+            }}
+          >
+            {/* We duplicate the content to make the infinite scroll seamless */}
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="flex items-center gap-8 md:gap-12 px-4 md:px-6">
+                <span>Java 21</span>
+                <span>•</span>
+                <span>Spring Boot</span>
+                <span>•</span>
+                <span>Microsserviços</span>
+                <span>•</span>
+                <span>AWS</span>
+                <span>•</span>
+                <span>Kafka</span>
+                <span>•</span>
+                <span>Arquitetura Hexagonal</span>
+                <span>•</span>
+                <span>DDD</span>
+                <span>•</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Simple ambient background effect to replace particles for now */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-900/20 rounded-full blur-[100px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-800/10 rounded-full blur-[100px]" />
         </div>
       </section>
     </main>
