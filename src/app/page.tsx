@@ -2,97 +2,229 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import Image from "next/image";
+import AboutSection from "@/components/AboutSection";
+
+const technologies = [
+  "Java",
+  "Spring Boot",
+  "Monólito Modular",
+  "Microsserviços",
+  "DevOps",
+  "AWS",
+  "Kafka",
+  "Arquitetura Hexagonal",
+  "DDD",
+  "Event Sourcing",
+  "CQRS",
+  "Node.js",
+  "React",
+  "TypeScript",
+  "Angular",
+  "Vue.js"
+];
+
+function AnimatedBackground() {
+  return (
+    <div className="hero-background" aria-hidden="true">
+      <div className="hero-noise" />
+      <div className="hero-grid" />
+      <div className="hero-orb hero-orb-primary" />
+      <div className="hero-orb hero-orb-secondary" />
+    </div>
+  );
+}
+
+function BrandWordmark() {
+  return (
+    <svg
+      className="brand-wordmark"
+      viewBox="0 0 130 28"
+      role="img"
+      aria-label="Thiago ponto dev"
+    >
+      <defs>
+        <filter
+          id="brand-fuzz"
+          x="-30%"
+          y="-100%"
+          width="160%"
+          height="300%"
+          colorInterpolationFilters="sRGB"
+        >
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation="1.65"
+            result="soft-brand"
+          />
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.82"
+            numOctaves="3"
+            seed="7"
+            result="brand-noise"
+          >
+            <animate
+              attributeName="seed"
+              dur="0.45s"
+              repeatCount="indefinite"
+              values="7;19;11;25;7"
+            />
+          </feTurbulence>
+          <feDisplacementMap
+            in="soft-brand"
+            in2="brand-noise"
+            scale="5.5"
+            xChannelSelector="R"
+            yChannelSelector="G"
+            result="fuzzy-brand"
+          >
+            <animate
+              attributeName="scale"
+              dur="1.4s"
+              repeatCount="indefinite"
+              values="4.2;6.4;4.8;5.9;4.2"
+            />
+          </feDisplacementMap>
+          <feColorMatrix
+            in="brand-noise"
+            type="matrix"
+            values="0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 0 0
+                    0.72 0.72 0.72 0 0"
+            result="grain-mask"
+          />
+          <feComposite
+            in="fuzzy-brand"
+            in2="grain-mask"
+            operator="in"
+            result="grain-brand"
+          />
+          <feMerge>
+            <feMergeNode in="fuzzy-brand" />
+            <feMergeNode in="grain-brand" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <text
+        className="brand-wordmark-fuzz"
+        x="2"
+        y="20"
+        filter="url(#brand-fuzz)"
+      >
+        THIAGO.DEV
+      </text>
+      <text className="brand-wordmark-label" x="2" y="20">
+        THIAGO<tspan className="brand-wordmark-dot">.</tspan>DEV
+      </text>
+    </svg>
+  );
+}
+
+function SocialLink({ href, label }: { href: string; label: string }) {
+  const isExternal = href.startsWith("http");
+
+  return (
+    <a
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
+      className="social-link group"
+    >
+      <span>{label}</span>
+      <ArrowUpRight
+        className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 md:size-5"
+        aria-hidden="true"
+      />
+    </a>
+  );
+}
 
 export default function Home() {
   return (
-    <main className="flex-1 flex flex-col bg-black overflow-x-hidden min-h-screen">
-      {/* Welcome / Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        
-        {/* Top Brand / Avatar (Like Attekita's Top-Left) */}
-        <div className="absolute top-8 left-6 md:top-14 md:left-12 flex items-center gap-4 z-20">
-          {/* Avatar com borda colorida */}
-          <div className="w-16 h-16 md:w-24 md:h-24 border-4 md:border-8 border-emerald-500 rounded-full bg-zinc-800 flex items-center justify-center text-emerald-500 font-bold text-xl md:text-3xl">
-            TP
-          </div>
-          <div className="text-white font-bold text-xl tracking-wider hidden md:block">
-            THIAGO<span className="text-emerald-500">.</span>DEV
-          </div>
-        </div>
+    <main className="min-h-screen overflow-x-hidden bg-black">
+      <section className="hero-shell">
+        <AnimatedBackground />
 
-        {/* Hero Content */}
-        <div className="container px-6 relative z-10 w-full flex justify-center">
-          <div className="max-w-4xl w-full">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight"
-            >
-              Olá! Sou Thiago Roberto Pereira, <br className="hidden md:block" />
-              <span className="text-emerald-500">Arquiteto de Software</span> e <br className="hidden md:block" /> Engenheiro Backend.
-            </motion.div>
+        <header className="hero-header">
+          <a href="#inicio" className="brand" aria-label="Ir para o início">
+            <BrandWordmark />
+          </a>
 
-            {/* Links styled like Attekita's */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="flex flex-wrap text-sm md:text-base text-emerald-500 gap-6 md:gap-8 pt-8"
-            >
-              <a href="https://linkedin.com/in/thiago-roberto-pereira" target="_blank" className="flex items-center hover:text-emerald-400 transition-colors">
-                LinkedIn <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
-              </a>
-              <a href="https://github.com/trpereira711" target="_blank" className="flex items-center hover:text-emerald-400 transition-colors">
-                GitHub <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
-              </a>
-              <a href="#contato" className="flex items-center hover:text-emerald-400 transition-colors">
-                Contato <ArrowUpRight className="ml-1 w-4 h-4 md:w-5 md:h-5" />
-              </a>
-            </motion.div>
+          <div className="availability">
+            <span className="availability-dot" aria-hidden="true" />
+            15+ anos construindo software
           </div>
-        </div>
+        </header>
 
-        {/* Ticker / Marquee styled exactly like the Attekita's bottom bar */}
-        <div className="bg-emerald-500 h-14 md:h-16 absolute left-0 right-0 bottom-0 flex items-center overflow-hidden z-20">
+        <div id="inicio" className="hero-content">
           <motion.div
-            className="flex whitespace-nowrap text-black font-extrabold text-lg md:text-xl uppercase tracking-widest"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              ease: "linear",
-              duration: 20,
-            }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* We duplicate the content to make the infinite scroll seamless */}
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center gap-8 md:gap-12 px-4 md:px-6">
-                <span>Java 21</span>
-                <span>•</span>
-                <span>Spring Boot</span>
-                <span>•</span>
-                <span>Microsserviços</span>
-                <span>•</span>
-                <span>AWS</span>
-                <span>•</span>
-                <span>Kafka</span>
-                <span>•</span>
-                <span>Arquitetura Hexagonal</span>
-                <span>•</span>
-                <span>DDD</span>
-                <span>•</span>
-              </div>
-            ))}
+            <div className="hero-eyebrow">
+              <span aria-hidden="true">01</span>
+              <span>Software architecture · Backend engineering</span>
+            </div>
+
+            <h1 className="hero-title">
+              Olá! Sou Thiago,
+              <span>
+                Arquiteto de Software
+                <span className="title-cursor" aria-hidden="true" />
+              </span>
+              e Engenheiro FullStack.
+            </h1>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="hero-footer"
+          >
+            <p className="hero-description">
+              Construindo e modernizando sistemas de alta escala e missão
+              crítica há mais de 15 anos.
+            </p>
+
+            <nav className="social-links" aria-label="Links principais">
+              <SocialLink
+                href="https://linkedin.com/in/thiago-roberto-pereira"
+                label="LinkedIn"
+              />
+              <SocialLink
+                href="https://github.com/trpereira711"
+                label="GitHub"
+              />
+              <SocialLink href="#contato" label="Contato" />
+            </nav>
           </motion.div>
         </div>
 
-        {/* Simple ambient background effect to replace particles for now */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-900/20 rounded-full blur-[100px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-800/10 rounded-full blur-[100px]" />
+        <div className="tech-ticker" aria-label={`Tecnologias: ${technologies.join(", ")}`}>
+          <div className="ticker-track" aria-hidden="true">
+            {[0, 1].map((copy) => (
+              <div className="ticker-group" key={copy}>
+                {technologies.map((technology) => (
+                  <span className="ticker-item" key={`${copy}-${technology}`}>
+                    {technology}
+                    <span className="ticker-symbol" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      <AboutSection />
     </main>
   );
 }
