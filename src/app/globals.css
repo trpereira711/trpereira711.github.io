@@ -55,7 +55,7 @@ body {
 }
 
 .hero-background {
-  position: absolute;
+  position: fixed;
   z-index: 0;
   inset: 0;
   overflow: hidden;
@@ -460,7 +460,6 @@ body {
   position: relative;
   z-index: 10;
   width: 100%;
-  background: var(--background);
   padding: clamp(5rem, 12vw, 10rem) 0;
 }
 

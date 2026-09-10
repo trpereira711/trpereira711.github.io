@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import AboutSection from "@/components/AboutSection";
 
 const technologies = [
@@ -142,11 +142,24 @@ function SocialLink({ href, label }: { href: string; label: string }) {
 }
 
 export default function Home() {
+  const scrollToNextSection = () => {
+    const nextSection = document.querySelector<HTMLElement>(
+      "main > section + section",
+    );
+
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+  };
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-black">
-      <section className="hero-shell">
-        <AnimatedBackground />
+      <AnimatedBackground />
 
+      <section className="hero-shell">
         <header className="hero-header">
           <a href="#inicio" className="brand" aria-label="Ir para o início">
             <BrandWordmark />
@@ -209,6 +222,15 @@ export default function Home() {
             </nav>
           </motion.div>
         </div>
+
+        <button
+          type="button"
+          className="scroll-indicator"
+          onClick={scrollToNextSection}
+          aria-label="Ir para o conteúdo abaixo"
+        >
+          <ArrowDown aria-hidden="true" />
+        </button>
 
         <div className="tech-ticker" aria-label={`Tecnologias: ${technologies.join(", ")}`}>
           <div className="ticker-track" aria-hidden="true">
