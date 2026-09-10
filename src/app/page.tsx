@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import AboutSection from "@/components/AboutSection";
+import DomainSection from "@/components/DomainSection";
+import SectionEyebrow from "@/components/SectionEyebrow";
 
 const technologies = [
   "Java",
@@ -141,6 +143,28 @@ function SocialLink({ href, label }: { href: string; label: string }) {
   );
 }
 
+function TechTicker() {
+  return (
+    <div
+      className="tech-ticker"
+      aria-label={`Tecnologias: ${technologies.join(", ")}`}
+    >
+      <div className="ticker-track" aria-hidden="true">
+        {[0, 1].map((copy) => (
+          <div className="ticker-group" key={copy}>
+            {technologies.map((technology) => (
+              <span className="ticker-item" key={`${copy}-${technology}`}>
+                {technology}
+                <span className="ticker-symbol" />
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const scrollToNextSection = () => {
     const nextSection = document.querySelector<HTMLElement>(
@@ -156,7 +180,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black">
+    <main className="page-shell min-h-screen overflow-x-hidden bg-black">
       <AnimatedBackground />
 
       <section className="hero-shell">
@@ -178,10 +202,10 @@ export default function Home() {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="hero-eyebrow">
-              <span aria-hidden="true">01</span>
-              <span>Software architecture · Backend engineering</span>
-            </div>
+            <SectionEyebrow
+              number="01"
+              label="Software architecture · Backend engineering"
+            />
 
             <h1 className="hero-title">
               Olá! Sou Thiago,
@@ -232,23 +256,11 @@ export default function Home() {
           <ArrowDown aria-hidden="true" />
         </button>
 
-        <div className="tech-ticker" aria-label={`Tecnologias: ${technologies.join(", ")}`}>
-          <div className="ticker-track" aria-hidden="true">
-            {[0, 1].map((copy) => (
-              <div className="ticker-group" key={copy}>
-                {technologies.map((technology) => (
-                  <span className="ticker-item" key={`${copy}-${technology}`}>
-                    {technology}
-                    <span className="ticker-symbol" />
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       <AboutSection />
+      <DomainSection />
+      <TechTicker />
     </main>
   );
 }

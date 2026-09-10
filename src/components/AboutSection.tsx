@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SectionEyebrow from "@/components/SectionEyebrow";
 
 export default function AboutSection() {
   return (
@@ -31,6 +31,12 @@ export default function AboutSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="about-content"
         >
+          <SectionEyebrow
+            number="02"
+            label="Sobre mim · trajetória profissional"
+            className="about-eyebrow"
+          />
+
           <h2 className="about-title">
             Construindo software para <br />
             <span>impactar negócios.</span>
