@@ -1,0 +1,21 @@
+# Thiago Roberto Pereira — Desenvolvedor de Software
+
+> Desenvolvedor de Software (Full Stack & Backend) com mais de 15 anos de experiência na construção e evolução de sistemas web, APIs e aplicações críticas. Baseado em Brasília, DF, com atuação remota em todo o Brasil.
+
+## Sobre
+- **Nome:** Thiago Roberto Pereira
+- **Site oficial:** https://trpsoftware.com.br/
+- **Localização:** Brasília, DF, Brasil (Atendimento remoto em todo o Brasil)
+- **Experiência:** 15+ anos desenvolvendo software para os setores de finanças, saúde, justiça e administração pública.
+
+## Áreas de Atuação e Tecnologias
+- **Desenvolvimento Backend:** Java, Spring Boot, Node.js, PostgreSQL, Oracle, Redis, JPA / Hibernate.
+- **Modernização de Sistemas:** Evolução gradual de sistemas legados, redução de acoplamento, Microsserviços, Monólito Modular, DDD, Arquitetura Hexagonal.
+- **APIs e Integrações:** REST, gRPC, Apache Kafka, mensageria assíncrona e integrações resilientes.
+- **Aplicações Web & Frontend:** TypeScript, React, Next.js, Angular, Vue.js, Tailwind CSS.
+- **Qualidade, Testes e Produtividade com IA:** Testes automatizados (JUnit), CI/CD, Docker, AWS, observabilidade e fluxo de desenvolvimento assistido por agentes de IA (Claude Code, Cursor, Antigravity).
+
+## Links e Contato
+- **LinkedIn:** https://www.linkedin.com/in/thiago-roberto-pereira-2b2a89106/
+- **GitHub:** https://github.com/trpereira711
+- **Contato:** Formulário disponível em https://trpsoftware.com.br/#contato
