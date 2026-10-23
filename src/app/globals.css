@@ -904,6 +904,32 @@ body::after {
   line-height: 1.25;
 }
 
+.domain-card-trigger {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: default;
+}
+
+.domain-card-chevron {
+  display: none;
+}
+
+.domain-card-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .domain-card-desc {
   position: relative;
   z-index: 2;
@@ -1815,5 +1841,212 @@ body::after {
 @media (max-width: 1024px) {
   html {
     scroll-snap-type: y proximity;
+  }
+}
+
+/* --- Mobile-Native Experience (< 768px) --- */
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  body::before,
+  body::after,
+  .tech-ticker {
+    display: none;
+  }
+
+  .scroll-indicator {
+    bottom: 1.25rem;
+  }
+
+  .page-shell {
+    width: 100%;
+  }
+
+  .page-shell > section:not(.hero-shell) {
+    min-height: auto;
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .page-shell > section.contact-shell {
+    padding-bottom: 2.5rem;
+  }
+
+  /* 02. Sobre: Texto e indicadores primeiro, terminal abaixo */
+  .about-container {
+    gap: 2.25rem;
+  }
+
+  .about-content {
+    order: -1;
+  }
+
+  .about-description {
+    margin-bottom: 1.75rem;
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 1.1rem 0.9rem;
+    border-radius: 1rem;
+    background: rgba(7, 17, 11, 0.65);
+    border: 1px solid rgba(57, 245, 157, 0.14);
+  }
+
+  .stat-number {
+    font-size: 1.15rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+
+  /* 04. Como Trabalho: Timeline vertical compacta */
+  .workflow-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .workflow-grid {
+    position: relative;
+    gap: 0.75rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(57, 245, 157, 0.25);
+  }
+
+  .workflow-card {
+    padding: 1rem 1.15rem;
+    border-radius: 1rem;
+  }
+
+  .workflow-card-top {
+    margin-bottom: 0.4rem;
+  }
+
+  .workflow-icon-box {
+    display: none;
+  }
+
+  .workflow-title-row {
+    margin-bottom: 0.35rem;
+  }
+
+  .workflow-card-title {
+    font-size: 1rem;
+  }
+
+  .workflow-card-desc {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  /* 05. Contato: Botões rápidos lado a lado e formulário compacto */
+  .contact-channels {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .contact-channel-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .contact-form-card {
+    padding: 1.25rem;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+  }
+}
+
+/* 03. Atuação & Stack: Acordeão interativo no celular (< 640px) */
+@media (max-width: 639px) {
+  .domain-header {
+    text-align: left;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+  }
+
+  .domain-description {
+    margin: 0;
+  }
+
+  .domain-grid {
+    gap: 0.65rem;
+  }
+
+  .domain-card {
+    padding: 0;
+    border-radius: 1.1rem;
+  }
+
+  .domain-card:hover {
+    transform: none;
+  }
+
+  .domain-card.is-mobile-open {
+    border-color: rgba(57, 245, 157, 0.35);
+    background: rgba(9, 22, 14, 0.72);
+  }
+
+  .domain-card-trigger {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.95rem 1.1rem;
+    cursor: pointer;
+  }
+
+  .domain-icon-wrapper {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-bottom: 0;
+    border-radius: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .domain-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .domain-card-title {
+    margin: 0;
+    font-size: 0.98rem;
+    flex: 1;
+  }
+
+  .domain-card-chevron {
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 220ms ease;
+  }
+
+  .domain-card.is-mobile-open .domain-card-chevron {
+    transform: rotate(180deg);
+  }
+
+  .domain-card-body {
+    display: none;
+    padding: 0 1.1rem 1.1rem;
+    border-top: 1px solid rgba(57, 245, 157, 0.1);
+  }
+
+  .domain-card.is-mobile-open .domain-card-body {
+    display: flex;
+    padding-top: 0.85rem;
+  }
+
+  .domain-card-desc {
+    margin-bottom: 0.85rem;
+    font-size: 0.86rem;
   }
 }

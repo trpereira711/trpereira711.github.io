@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import {
@@ -9,6 +10,7 @@ import {
   Gauge,
   ShieldCheck,
   Layout,
+  ChevronDown,
 } from "lucide-react";
 
 const domains = [
@@ -68,22 +70,24 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.15,
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
 export default function DomainSection() {
+  const [openMobileIndex, setOpenMobileIndex] = useState<number>(0);
+
   return (
     <section id="especialidades" className="domain-shell">
       <div className="domain-container">
@@ -116,28 +120,51 @@ export default function DomainSection() {
           viewport={{ once: false, amount: 0.1 }}
           className="domain-grid"
         >
-          {domains.map((domain, index) => (
-            <motion.article
-              key={index}
-              variants={cardVariants}
-              className="domain-card group"
-            >
-              <div className="domain-card-bg" aria-hidden="true" />
-              <div className="domain-icon-wrapper">{domain.icon}</div>
-              <h3 className="domain-card-title">{domain.title}</h3>
-              <p className="domain-card-desc">{domain.description}</p>
-              <div
-                className="domain-tags"
-                aria-label={`Tecnologias de ${domain.title}`}
+          {domains.map((domain, index) => {
+            const isMobileOpen = openMobileIndex === index;
+
+            return (
+              <motion.article
+                key={index}
+                variants={cardVariants}
+                className={`domain-card group ${
+                  isMobileOpen ? "is-mobile-open" : ""
+                }`}
               >
-                {domain.tags.map((tag) => (
-                  <span key={tag} className="domain-tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
-          ))}
+                <div className="domain-card-bg" aria-hidden="true" />
+
+                <button
+                  type="button"
+                  className="domain-card-trigger"
+                  aria-expanded={isMobileOpen}
+                  onClick={() =>
+                    setOpenMobileIndex((prev) => (prev === index ? -1 : index))
+                  }
+                >
+                  <div className="domain-icon-wrapper">{domain.icon}</div>
+                  <h3 className="domain-card-title">{domain.title}</h3>
+                  <ChevronDown
+                    className="domain-card-chevron"
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <div className="domain-card-body">
+                  <p className="domain-card-desc">{domain.description}</p>
+                  <div
+                    className="domain-tags"
+                    aria-label={`Tecnologias de ${domain.title}`}
+                  >
+                    {domain.tags.map((tag) => (
+                      <span key={tag} className="domain-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
         </motion.div>
       </div>
     </section>
