@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# THIAGO.DEV — Site Pessoal & Portfólio
 
-## Getting Started
+Repositório do site pessoal de **Thiago Roberto Pereira**, publicado em [trpsoftware.com.br](https://trpsoftware.com.br/).
 
-First, run the development server:
+## Sobre o projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Landing page moderna desenvolvida com foco em apresentar minha atuação como **Desenvolvedor de Software (Full Stack & Backend)**, principais tecnologias, processo de trabalho e canais de contato.
+
+### Seções da página
+
+1. **01 · Hero (`#inicio`)** — Apresentação direta, links principais (LinkedIn, GitHub, Contato) e faixa animada de tecnologias.
+2. **02 · Sobre mim (`#sobre`)** — Resumo de trajetória (+15 anos de experiência), contadores e terminal interativo (`thiago@dev:~`) com informações sobre atuação, setores atendidos, fluxo com IA e stack.
+3. **03 · Áreas de atuação & Tecnologias (`#especialidades`)** — Desenvolvimento Backend (Java & Node.js), Modernização de Sistemas & Microsserviços, APIs & Mensageria, Aplicações Web & Frontend, Qualidade/Testes & Fluxo IA e Performance/Cloud.
+4. **04 · Como trabalho (`#como-trabalho`)** — Processo em 5 etapas (Contexto, Diagnóstico, Definição da solução, Desenvolvimento/Testes e Entrega).
+5. **05 · Contato (`#contato`)** — Links diretos e formulário integrado ao Formspree.
+
+## Stack do site
+
+- **Next.js 16** (App Router com exportação estática `output: "export"`)
+- **React 19** & **TypeScript**
+- **Tailwind CSS 4**
+- **Framer Motion** (animações de entrada por scroll)
+- **Lucide React** (ícones)
+- **SEO & Indexação:** JSON-LD (`ProfilePage`, `Person`, `OfferCatalog`), Open Graph gerado via `next/og`, `sitemap.xml`, `robots.txt` e `llms.txt`.
+
+## Estrutura do projeto
+
+```text
+/
+├── .github/workflows/deploy.yml  # CI/CD para deploy automático no GitHub Pages
+├── public/                       # CNAME, .nojekyll e llms.txt
+├── src/
+│   ├── app/
+│   │   ├── globals.css           # Estilos globais e tokens visuais
+│   │   ├── icon.svg              # Favicon vetorial
+│   │   ├── layout.tsx            # Metadados SEO, Open Graph e JSON-LD
+│   │   ├── opengraph-image.tsx   # Geração da imagem de preview (1200x630)
+│   │   ├── page.tsx              # Página principal e Hero section
+│   │   ├── robots.ts             # Geração do robots.txt
+│   │   └── sitemap.ts            # Geração do sitemap.xml
+│   └── components/
+│       ├── AboutSection.tsx      # Seção Sobre + Terminal interativo
+│       ├── ContactSection.tsx    # Formulário de contato + Rodapé
+│       ├── DomainSection.tsx     # Cards de atuação e tecnologias
+│       ├── SectionEyebrow.tsx    # Cabeçalho numerado das seções
+│       └── WorkflowSection.tsx   # Etapas do processo de trabalho
+└── next.config.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como executar localmente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Instalar dependências
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Rodar servidor de desenvolvimento (http://localhost:3000)
+npm run dev
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Gerar build estático de produção (pasta ./out)
+npm run build
+```
