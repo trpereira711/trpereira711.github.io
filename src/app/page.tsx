@@ -1,35 +1,45 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Menu, X } from "lucide-react";
 import AboutSection from "@/components/AboutSection";
 import DomainSection from "@/components/DomainSection";
+import WorkflowSection from "@/components/WorkflowSection";
+import ContactSection from "@/components/ContactSection";
 import SectionEyebrow from "@/components/SectionEyebrow";
 
 const technologies = [
   "Java",
   "Spring Boot",
-  "Monólito Modular",
   "Microsserviços",
-  "DevOps",
-  "AWS",
-  "Kafka",
-  "Arquitetura Hexagonal",
-  "DDD",
-  "Event Sourcing",
-  "CQRS",
-  "Node.js",
-  "React",
   "TypeScript",
+  "React",
+  "Node.js",
+  "Next.js",
   "Angular",
-  "Vue.js"
+  "Vue.js",
+  "PostgreSQL",
+  "Kafka",
+  "Docker",
+  "AWS",
+  "REST & gRPC",
+  "DDD",
+  "Testes Automatizados",
+  "CI/CD",
+];
+
+const navItems = [
+  { href: "#sobre", label: "Sobre" },
+  { href: "#especialidades", label: "Atuação & Stack" },
+  { href: "#como-trabalho", label: "Como trabalho" },
+  { href: "#contato", label: "Contato" },
 ];
 
 function AnimatedBackground() {
   return (
     <div className="hero-background" aria-hidden="true">
       <div className="hero-noise" />
-      <div className="hero-grid" />
       <div className="hero-orb hero-orb-primary" />
       <div className="hero-orb hero-orb-secondary" />
     </div>
@@ -166,6 +176,8 @@ function TechTicker() {
 }
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const scrollToNextSection = () => {
     const nextSection = document.querySelector<HTMLElement>(
       "main > section + section",
@@ -181,19 +193,64 @@ export default function Home() {
 
   return (
     <main className="page-shell min-h-screen overflow-x-hidden bg-black">
-      <AnimatedBackground />
-
-      <section className="hero-shell">
-        <header className="hero-header">
-          <a href="#inicio" className="brand" aria-label="Ir para o início">
+      <header className="site-topbar">
+        <div className="site-topbar-inner">
+          <a
+            href="#inicio"
+            className="brand"
+            aria-label="Ir para o início"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             <BrandWordmark />
           </a>
 
-          <div className="availability">
-            <span className="availability-dot" aria-hidden="true" />
-            15+ anos construindo software
+          <nav className="hero-nav" aria-label="Navegação principal">
+            {navItems.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="topbar-right">
+            <div className="availability">
+              <span className="availability-dot" aria-hidden="true" />
+              15+ anos em desenvolvimento
+            </div>
+
+            <button
+              type="button"
+              className="mobile-menu-btn"
+              aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+            >
+              {mobileMenuOpen ? (
+                <X className="size-5" aria-hidden="true" />
+              ) : (
+                <Menu className="size-5" aria-hidden="true" />
+              )}
+            </button>
           </div>
-        </header>
+        </div>
+
+        {mobileMenuOpen && (
+          <nav className="mobile-nav-drawer" aria-label="Navegação mobile">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        )}
+      </header>
+
+      <section className="hero-shell">
+        <AnimatedBackground />
 
         <div id="inicio" className="hero-content">
           <motion.div
@@ -204,16 +261,15 @@ export default function Home() {
           >
             <SectionEyebrow
               number="01"
-              label="Software architecture · Backend engineering"
+              label="Desenvolvimento de Software · Full Stack & Backend"
             />
 
             <h1 className="hero-title">
-              Olá! Sou Thiago,
+              Olá, sou o Thiago.
               <span>
-                Arquiteto de Software
+                Desenvolvedor de Software
                 <span className="title-cursor" aria-hidden="true" />
               </span>
-              e Engenheiro FullStack.
             </h1>
           </motion.div>
 
@@ -229,20 +285,21 @@ export default function Home() {
             className="hero-footer"
           >
             <p className="hero-description">
-              Construindo e modernizando sistemas de alta escala e missão
-              crítica há mais de 15 anos.
+              Há mais de 15 anos desenvolvendo sistemas web, APIs e aplicações
+              críticas — do backend em Java e Node.js ao frontend em React,
+              TypeScript e Angular.
             </p>
 
             <nav className="social-links" aria-label="Links principais">
               <SocialLink
-                href="https://linkedin.com/in/thiago-roberto-pereira"
+                href="https://www.linkedin.com/in/thiago-roberto-pereira-2b2a89106/"
                 label="LinkedIn"
               />
               <SocialLink
                 href="https://github.com/trpereira711"
                 label="GitHub"
               />
-              <SocialLink href="#contato" label="Contato" />
+              <SocialLink href="#contato" label="Entrar em contato" />
             </nav>
           </motion.div>
         </div>
@@ -255,11 +312,12 @@ export default function Home() {
         >
           <ArrowDown aria-hidden="true" />
         </button>
-
       </section>
 
       <AboutSection />
       <DomainSection />
+      <WorkflowSection />
+      <ContactSection />
       <TechTicker />
     </main>
   );
