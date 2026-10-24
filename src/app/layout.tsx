@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
   applicationName: "Thiago Roberto Pereira — Desenvolvedor de Software",
+  referrer: "strict-origin-when-cross-origin",
   authors: [{ name: "Thiago Roberto Pereira", url: siteUrl }],
   creator: "Thiago Roberto Pereira",
   publisher: "Thiago Roberto Pereira",

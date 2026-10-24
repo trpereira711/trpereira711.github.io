@@ -17,6 +17,14 @@ type FieldErrors = {
   mensagem?: string;
 };
 
+const FIELD_LIMITS: Record<string, number> = {
+  _gotcha: 100,
+  nome: 100,
+  empresa: 120,
+  email: 254,
+  mensagem: 3000,
+};
+
 export default function ContactSection() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<{
@@ -49,6 +57,33 @@ export default function ContactSection() {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    // Honeypot anti-bot verification
+    const gotcha = String(formData.get("_gotcha") ?? "");
+    if (gotcha.length > 0) {
+      form.reset();
+      setStatus({
+        type: "success",
+        message: "Mensagem enviada com sucesso. Retornarei o contato em breve.",
+      });
+      return;
+    }
+
+    // Strict payload size verification
+    const hasOversizedField = Object.entries(FIELD_LIMITS).some(
+      ([field, limit]) => {
+        const value = formData.get(field);
+        return typeof value === "string" && value.length > limit;
+      },
+    );
+
+    if (hasOversizedField) {
+      setStatus({
+        type: "error",
+        message: "Um ou mais campos ultrapassaram o limite de caracteres permitido.",
+      });
+      return;
+    }
 
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length > 0) {

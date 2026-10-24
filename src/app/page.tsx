@@ -141,7 +141,7 @@ function SocialLink({ href, label }: { href: string; label: string }) {
     <a
       href={href}
       target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noreferrer" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className="social-link group"
     >
       <span>{label}</span>
