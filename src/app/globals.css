@@ -679,6 +679,7 @@ body::after {
   line-height: 1.8;
   margin-bottom: 3rem;
   max-width: 42rem;
+  text-align: justify;
 }
 
 .about-stats {
@@ -1894,6 +1895,7 @@ body::after {
     margin-bottom: 1.75rem;
     font-size: 0.96rem;
     line-height: 1.65;
+    text-align: left;
   }
 
   .about-stats {
