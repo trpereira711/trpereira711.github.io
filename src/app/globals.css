@@ -19,6 +19,7 @@
   --ticker-height: clamp(3.4rem, 5vw, 4.25rem);
   --page-gutter: clamp(1.25rem, 5vw, 4.5rem);
   --page-max-width: 92.5rem;
+  --container-max: 82.5rem;
   --frame-line: rgba(129, 151, 183, 0.18);
   --frame-hatch: rgba(129, 151, 183, 0.24);
   --page-edge: max(
@@ -32,6 +33,12 @@ html {
   background: var(--surface);
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
+}
+
+@media (min-width: 1536px) {
+  html {
+    font-size: clamp(16px, 0.98vw, 21px);
+  }
 }
 
 body {
@@ -230,7 +237,7 @@ body::after {
   right: 0;
   left: 0;
   display: flex;
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   align-items: center;
   justify-content: space-between;
   margin-inline: auto;
@@ -299,7 +306,7 @@ body::after {
 .hero-content {
   position: relative;
   z-index: 5;
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin: 0 auto;
   padding: clamp(10.5rem, min(18vw, 28svh), 16rem) clamp(1.25rem, 6vw, 6rem) clamp(4.5rem, 8svh, 6rem);
 }
@@ -311,7 +318,7 @@ body::after {
   margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
   color: rgba(255, 255, 255, 0.5);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: clamp(0.68rem, 1.2vw, 0.8rem);
+  font-size: clamp(0.72rem, 1.1vw, 0.88rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -328,7 +335,7 @@ body::after {
 }
 
 .hero-title {
-  max-width: 1120px;
+  max-width: 70rem;
   margin: 0;
   color: #f5f8f6;
   font-size: clamp(2.65rem, min(6.5vw, 10svh), 6.2rem);
@@ -360,7 +367,7 @@ body::after {
 
 .hero-footer {
   display: flex;
-  max-width: 1060px;
+  max-width: 66.25rem;
   align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
@@ -368,10 +375,10 @@ body::after {
 }
 
 .hero-description {
-  max-width: 34rem;
+  max-width: 36rem;
   margin: 0;
-  color: rgba(255, 255, 255, 0.57);
-  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: clamp(0.95rem, 1.3vw, 1.18rem);
   line-height: 1.75;
 }
 
@@ -575,7 +582,7 @@ body::after {
 
 .about-container {
   display: grid;
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin: 0 auto;
   grid-template-columns: 1fr;
   gap: clamp(3rem, 8vw, 6rem);
@@ -585,13 +592,13 @@ body::after {
 
 @media (min-width: 960px) {
   .about-container {
-    grid-template-columns: minmax(320px, 4.5fr) 6.5fr;
+    grid-template-columns: minmax(320px, 4.8fr) 6.2fr;
   }
 }
 
 .about-visual {
   width: 100%;
-  max-width: 520px;
+  max-width: 34rem;
   margin: 0 auto;
 }
 
@@ -780,13 +787,13 @@ body::after {
 }
 
 .domain-container {
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 6vw, 6rem);
 }
 
 .domain-header {
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(2.5rem, 4.5vw, 4rem);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -796,7 +803,7 @@ body::after {
 .domain-title {
   margin: 0 0 1rem 0;
   color: #f5f8f6;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(2.15rem, 4vw, 3.6rem);
   font-weight: 720;
   letter-spacing: -0.04em;
   line-height: 1.1;
@@ -812,9 +819,9 @@ body::after {
 
 .domain-description {
   color: rgba(255, 255, 255, 0.65);
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
   line-height: 1.6;
-  max-width: 36rem;
+  max-width: 38rem;
   margin: 0 auto;
 }
 
@@ -898,7 +905,7 @@ body::after {
   z-index: 2;
   margin: 0 0 0.75rem 0;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: clamp(1.18rem, 1.3vw, 1.35rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -934,8 +941,8 @@ body::after {
   position: relative;
   z-index: 2;
   margin: 0 0 1.25rem 0;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(0.92rem, 1vw, 1.02rem);
   line-height: 1.6;
   text-wrap: pretty;
 }
@@ -950,13 +957,13 @@ body::after {
 }
 
 .domain-tag {
-  padding: 0.3rem 0.6rem;
+  padding: 0.32rem 0.65rem;
   border-radius: 9999px;
   background: rgba(57, 245, 157, 0.07);
   border: 1px solid rgba(57, 245, 157, 0.18);
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.85);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.7rem;
+  font-size: clamp(0.7rem, 0.78vw, 0.78rem);
 }
 
 .domain-card:hover .domain-tag {
@@ -981,7 +988,7 @@ body::after {
 
 .site-topbar-inner {
   display: flex;
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   align-items: center;
   justify-content: space-between;
   margin-inline: auto;
@@ -1165,13 +1172,13 @@ body::after {
 }
 
 .about-code-block {
-  min-height: 10.5rem;
-  padding: 1.1rem 1.2rem;
+  min-height: 11rem;
+  padding: 1.15rem 1.25rem;
   border-radius: 0.85rem;
   background: rgba(2, 6, 4, 0.92);
   border: 1px solid rgba(57, 245, 157, 0.14);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: clamp(0.75rem, 0.95vw, 0.82rem);
+  font-size: clamp(0.78rem, 0.95vw, 0.9rem);
   line-height: 1.65;
 }
 
@@ -1240,7 +1247,7 @@ body::after {
 }
 
 .workflow-container {
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 6vw, 6rem);
 }
@@ -1252,7 +1259,7 @@ body::after {
 .workflow-title {
   margin: 0 0 1rem 0;
   color: #f5f8f6;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(2.15rem, 4vw, 3.6rem);
   font-weight: 720;
   letter-spacing: -0.04em;
   line-height: 1.1;
@@ -1268,9 +1275,9 @@ body::after {
 
 .workflow-description {
   margin: 0;
-  max-width: 42rem;
+  max-width: 44rem;
   color: rgba(255, 255, 255, 0.65);
-  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
   line-height: 1.65;
   text-wrap: pretty;
 }
@@ -1373,7 +1380,7 @@ body::after {
 .workflow-card-title {
   margin: 0;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: clamp(1.1rem, 1.2vw, 1.24rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -1381,8 +1388,8 @@ body::after {
 
 .workflow-card-desc {
   margin: 0;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(0.9rem, 0.98vw, 1rem);
   line-height: 1.6;
   text-wrap: pretty;
 }
@@ -1554,7 +1561,7 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 6vw, 6rem);
   gap: clamp(2.5rem, 5svh, 4rem);
